@@ -20,6 +20,11 @@ enum class StreamSource {
     NAVIDROME,
 }
 
+enum class StreamResolutionPriority {
+    FOREGROUND,
+    BACKGROUND,
+}
+
 data class AudioStreamRequest(
     val mediaId: String,
     val playlistId: String? = null,
@@ -29,6 +34,8 @@ data class AudioStreamRequest(
     val authState: PlaybackAuthState,
     val pinnedFormatId: Int? = null,
     val requiresSongMetadata: Boolean = false,
+    val source: StreamSource = StreamSource.YOUTUBEI,
+    val priority: StreamResolutionPriority = StreamResolutionPriority.FOREGROUND,
 )
 
 data class ResolvedAudioStream(

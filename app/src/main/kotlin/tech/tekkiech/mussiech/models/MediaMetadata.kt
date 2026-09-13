@@ -14,6 +14,7 @@ import moe.rukamori.archivetune.innertube.models.SongItem
 import moe.rukamori.archivetune.innertube.models.EpisodeItem
 import moe.rukamori.archivetune.innertube.models.WatchEndpoint.WatchEndpointMusicSupportedConfigs.WatchEndpointMusicConfig.Companion.MUSIC_VIDEO_TYPE_OMV
 import moe.rukamori.archivetune.innertube.models.WatchEndpoint.WatchEndpointMusicSupportedConfigs.WatchEndpointMusicConfig.Companion.MUSIC_VIDEO_TYPE_UGC
+import tech.tekkiech.mussiech.playback.stream.StreamSource
 import tech.tekkiech.mussiech.ui.utils.YtimgResizePolicy
 import tech.tekkiech.mussiech.ui.utils.resize
 import java.io.Serializable
@@ -35,6 +36,7 @@ data class MediaMetadata(
     val inLibrary: LocalDateTime? = null,
     val isMusicVideo: Boolean = false,
     val isPodcast: Boolean = false,
+    val source: StreamSource = StreamSource.YOUTUBEI,
 ) : Serializable {
     companion object {
         private const val serialVersionUID = 1L

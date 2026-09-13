@@ -225,6 +225,7 @@ import tech.tekkiech.mussiech.playback.stream.AudioStreamRequest
 import tech.tekkiech.mussiech.playback.stream.ResolveAudioStreamUseCase
 import tech.tekkiech.mussiech.playback.stream.ResolvedAudioStream
 import tech.tekkiech.mussiech.playback.stream.StreamPurpose
+import tech.tekkiech.mussiech.playback.stream.StreamSource
 import tech.tekkiech.mussiech.playback.queues.EmptyQueue
 import tech.tekkiech.mussiech.playback.queues.ListQueue
 import tech.tekkiech.mussiech.playback.queues.Queue
@@ -373,6 +374,14 @@ class MusicService :
     private val remotePlaybackTrackingUrlCache = ConcurrentHashMap<String, String>()
     private val contentLengthCache = ConcurrentHashMap<String, Long>()
     private val castMimeTypeCache = LruCache<String, String>(128)
+
+    /**
+     * [resolvePlaybackDataSpec] only has a bare mediaId (via [androidx.media3.datasource.DataSpec.key]),
+     * not the [MediaItem] it came from, so it can't read [MediaMetadata.source] directly the way the
+     * other two [AudioStreamRequest]-building call sites can. Populated opportunistically from
+     * [onTimelineChanged], which fires on every queue mutation regardless of which call site built it.
+     */
+    private val mediaSourceCache = ConcurrentHashMap<String, StreamSource>()
     private val mediaOkHttpClient: OkHttpClient by lazy {
         OkHttpClient
             .Builder()
@@ -3901,6 +3910,7 @@ class MusicService :
             }
         }
         if (mediaMetadata.isPodcast) return
+        if (mediaMetadata.source != StreamSource.YOUTUBEI) return
         if (!database.hasRelatedSongs(mediaId)) {
             val relatedEndpoint =
                 YouTube.next(WatchEndpoint(videoId = mediaId)).getOrNull()?.relatedEndpoint
@@ -6639,6 +6649,16 @@ class MusicService :
         return false
     }
 
+    override fun onTimelineChanged(
+        timeline: Timeline,
+        reason: Int,
+    ) {
+        super.onTimelineChanged(timeline, reason)
+        for (item in player.mediaItems) {
+            item.metadata?.let { mediaSourceCache[item.mediaId] = it.source }
+        }
+    }
+
     override fun onMediaItemTransition(
         mediaItem: MediaItem?,
         reason: Int,
@@ -6914,6 +6934,7 @@ class MusicService :
                     purpose = StreamPurpose.PLAYBACK,
                     authState = configuration.authState,
                     pinnedFormatId = null,
+                    source = nextMediaItem.metadata?.source ?: StreamSource.YOUTUBEI,
                 ),
         )
     }
@@ -7537,6 +7558,7 @@ class MusicService :
                     networkMetered = lowDataModeActive,
                     purpose = StreamPurpose.PLAYBACK,
                     authState = YouTube.currentPlaybackAuthState(),
+                    source = mediaItem.metadata?.source ?: StreamSource.YOUTUBEI,
                 ),
             ) ?: return mediaItem
         val resolvedMimeType =
@@ -7617,6 +7639,7 @@ class MusicService :
                             networkMetered = lowDataModeActive,
                             purpose = StreamPurpose.PLAYBACK,
                             authState = YouTube.currentPlaybackAuthState(),
+                            source = mediaSourceCache[mediaId] ?: StreamSource.YOUTUBEI,
                         ),
                     ).also { resolved ->
                         resolvedRequestHeaders = resolved.requestHeaders

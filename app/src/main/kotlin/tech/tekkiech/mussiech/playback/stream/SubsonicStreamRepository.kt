@@ -13,13 +13,9 @@ import javax.inject.Inject
  * stream URL already carries its own auth params and doesn't expire on a short signed-URL clock,
  * so most of [ResolvedAudioStream]'s YTM-oriented fields (formatId/codecs/bitrate/loudness/
  * playbackTrackingUrl) are unknown ahead of time and left at safe defaults - Media3 resolves the
- * real format from the response itself once playback starts.
- *
- * Not yet wired into [ResolveAudioStreamUseCase] as the live resolver: that use case is still
- * hard-wired to [YoutubeiStreamRepository] directly (not this interface) and unconditionally runs
- * YTM-specific PoToken refresh logic before resolving. Nothing in the app produces Navidrome-sourced
- * media IDs yet (Home/Search/etc. aren't rewired until later phases), so cutting over the use case
- * is deferred until there's a real caller to wire it against.
+ * real format from the response itself once playback starts. Ignores [AudioStreamRequest.priority]
+ * entirely - Navidrome resolution is just URL construction, no real foreground/background network
+ * priority concept applies the way it does for YouTube's resolver.
  */
 class SubsonicStreamRepository
     @Inject

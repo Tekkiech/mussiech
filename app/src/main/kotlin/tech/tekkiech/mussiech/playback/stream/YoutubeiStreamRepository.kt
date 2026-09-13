@@ -43,20 +43,8 @@ class YoutubeiStreamRepository
                 )
             }
 
-        override suspend fun resolve(request: AudioStreamRequest): ResolvedAudioStream =
-            resolve(
-                request = request,
-                priority =
-                    when (request.purpose) {
-                        StreamPurpose.PLAYBACK -> StreamResolutionPriority.FOREGROUND
-                        StreamPurpose.DOWNLOAD -> StreamResolutionPriority.BACKGROUND
-                    },
-            )
-
-        internal suspend fun resolve(
-            request: AudioStreamRequest,
-            priority: StreamResolutionPriority,
-        ): ResolvedAudioStream {
+        override suspend fun resolve(request: AudioStreamRequest): ResolvedAudioStream {
+            val priority = request.priority
             val authState = request.authState
             if (authState.hasLoginCookie && !hasCompleteYouTubeLoginCookies(authState.cookie)) {
                 throw YTPlayerUtils.InvalidPlaybackLoginContextException(
@@ -175,8 +163,3 @@ class YoutubeiStreamRepository
         private val AudioStreamRequest.mediaUrl: String
             get() = "https://music.youtube.com/watch?v=$mediaId"
     }
-
-internal enum class StreamResolutionPriority {
-    FOREGROUND,
-    BACKGROUND,
-}

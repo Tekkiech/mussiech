@@ -34,7 +34,14 @@ class ResolveAudioStreamUseCase
     @Inject
     constructor(
         private val youtubeiRepository: YoutubeiStreamRepository,
+        private val subsonicRepository: SubsonicStreamRepository,
     ) {
+        private fun repositoryFor(source: StreamSource): AudioStreamRepository =
+            when (source) {
+                StreamSource.YOUTUBEI -> youtubeiRepository
+                StreamSource.NAVIDROME -> subsonicRepository
+            }
+
         private data class CacheKey(
             val mediaId: String,
             val quality: String,
@@ -43,6 +50,7 @@ class ResolveAudioStreamUseCase
             val authFingerprint: String,
             val pinnedFormatId: Int?,
             val requiresSongMetadata: Boolean,
+            val source: StreamSource,
         )
 
         private data class InFlightKey(
@@ -268,7 +276,7 @@ class ResolveAudioStreamUseCase
             priority: StreamResolutionPriority,
         ): ResolvedAudioStream {
             val resolvedAuthState =
-                if (request.authState.hasLoginCookie) {
+                if (request.source == StreamSource.YOUTUBEI && request.authState.hasLoginCookie) {
                     YTPlayerUtils.ensureYoutubeiPoTokensForPlayback(
                         videoId = request.mediaId,
                         authState = request.authState,
@@ -276,9 +284,8 @@ class ResolveAudioStreamUseCase
                 } else {
                     request.authState
                 }
-            return youtubeiRepository.resolve(
-                request = request.copy(authState = resolvedAuthState),
-                priority = priority,
+            return repositoryFor(request.source).resolve(
+                request.copy(authState = resolvedAuthState, priority = priority),
             )
         }
 
@@ -300,6 +307,7 @@ class ResolveAudioStreamUseCase
                 authFingerprint = authState.streamCacheFingerprint,
                 pinnedFormatId = pinnedFormatId,
                 requiresSongMetadata = requiresSongMetadata,
+                source = source,
             )
 
         private fun storeResolvedStream(
@@ -307,20 +315,22 @@ class ResolveAudioStreamUseCase
             resolved: ResolvedAudioStream,
         ) {
             putResolvedStream(key, resolved)
-            if (resolved.source == StreamSource.YOUTUBEI) {
-                val alternatePurpose =
-                    when (key.purpose) {
-                        StreamPurpose.PLAYBACK -> StreamPurpose.DOWNLOAD
-                        StreamPurpose.DOWNLOAD -> StreamPurpose.PLAYBACK
-                    }
-                putResolvedStream(
-                    key.copy(
-                        purpose = alternatePurpose,
-                        requiresSongMetadata = false,
-                    ),
-                    resolved,
-                )
-            }
+            // Duplicate the cache entry under the other StreamPurpose: for YTM this avoids
+            // re-fetching a signed URL within its validity window, and for Navidrome the URL
+            // never expires anyway, so duplicating avoids a redundant getStreamUrl call across
+            // PLAYBACK/DOWNLOAD purpose keys for the same track.
+            val alternatePurpose =
+                when (key.purpose) {
+                    StreamPurpose.PLAYBACK -> StreamPurpose.DOWNLOAD
+                    StreamPurpose.DOWNLOAD -> StreamPurpose.PLAYBACK
+                }
+            putResolvedStream(
+                key.copy(
+                    purpose = alternatePurpose,
+                    requiresSongMetadata = false,
+                ),
+                resolved,
+            )
             Timber.tag(TAG).d(
                 "Resolved %s via %s (%s)",
                 key.mediaId,
