@@ -415,37 +415,7 @@ class AboutViewModel
                             id = "github",
                             iconResId = R.drawable.github,
                             labelResId = R.string.about_content_desc_github,
-                            url = "https://github.com/rukamori/ArchiveTune",
-                        ),
-                        AboutLinkUiModel(
-                            id = "website",
-                            iconResId = R.drawable.website,
-                            labelResId = R.string.about_content_desc_website,
-                            url = "https://archivetune.koiiverse.cloud",
-                        ),
-                        AboutLinkUiModel(
-                            id = "telegram",
-                            iconResId = R.drawable.telegram,
-                            labelResId = R.string.about_content_desc_telegram,
-                            url = "https://t.me/ArchiveTuneGC",
-                        ),
-                        AboutLinkUiModel(
-                            id = "donate",
-                            iconResId = R.drawable.coffee,
-                            labelResId = R.string.about_content_desc_donate,
-                            url = "https://koiiverse.cloud/donate",
-                        ),
-                        AboutLinkUiModel(
-                            id = "discord",
-                            iconResId = R.drawable.discord,
-                            labelResId = R.string.discord,
-                            url = "https://discord.gg/XF2fpb9rTq",
-                        ),
-                        AboutLinkUiModel(
-                            id = "privacy_policy",
-                            iconResId = R.drawable.lock,
-                            labelResId = R.string.privacy,
-                            url = "https://archivetune.koiiverse.cloud/privacy",
+                            url = "https://github.com/Tekkiech/mussiech",
                         ),
                     ),
                 leadDeveloper =
@@ -478,6 +448,21 @@ class AboutViewModel
                     ),
                 collaborators =
                     TeamMemberCollection.of(
+                        TeamMember(
+                            avatarUrl = "https://github.com/Tekkiech.png",
+                            name = "Tekkiech",
+                            positionResId = R.string.about_position_mussiech_maintainer,
+                            profileUrl = "https://github.com/Tekkiech",
+                            links =
+                                AboutLinkCollection.of(
+                                    AboutLinkUiModel(
+                                        id = "github",
+                                        iconResId = R.drawable.github,
+                                        labelResId = R.string.about_content_desc_github,
+                                        url = "https://github.com/Tekkiech",
+                                    ),
+                                ),
+                        ),
                         TeamMember(
                             avatarUrl = "https://avatars.githubusercontent.com/u/89002922?v=4",
                             name = "Miko",

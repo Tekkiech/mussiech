@@ -920,11 +920,9 @@ class MainActivity : ComponentActivity() {
                     val coroutineScope = rememberCoroutineScope()
                     val homeViewModel: HomeViewModel = hiltViewModel()
                     val networkBannerViewModel: NetworkBannerViewModel = hiltViewModel()
-                    val newsViewModel: NewsViewModel = hiltViewModel()
                     val allLocalItems by homeViewModel.allLocalItems.collectAsState()
                     val allYtItems by homeViewModel.allYtItems.collectAsState()
                     val networkBannerState by networkBannerViewModel.bannerState.collectAsStateWithLifecycle()
-                    val hasUnreadNews by newsViewModel.hasUnreadNews.collectAsStateWithLifecycle()
                     val navBackStackEntry by navController.currentBackStackEntryAsState()
                     val (previousTab) = rememberSaveable { mutableStateOf("home") }
                     val currentRoute = navBackStackEntry?.destination?.route
@@ -1827,43 +1825,11 @@ class MainActivity : ComponentActivity() {
                                                             contentDescription = stringResource(R.string.history),
                                                         )
                                                     }
-                                                    TooltipBox(
-                                                        positionProvider =
-                                                            if (hasUnreadNews) {
-                                                                TooltipDefaults.rememberRichTooltipPositionProvider()
-                                                            } else {
-                                                                TooltipDefaults.rememberPlainTooltipPositionProvider()
-                                                            },
-                                                        tooltip = {
-                                                            if (hasUnreadNews) {
-                                                                RichTooltip(
-                                                                    title = { Text(stringResource(R.string.news_tooltip_title)) },
-                                                                ) {
-                                                                    Text(stringResource(R.string.news_tooltip_body))
-                                                                }
-                                                            } else {
-                                                                PlainTooltip {
-                                                                    Text(stringResource(R.string.news))
-                                                                }
-                                                            }
-                                                        },
-                                                        state = rememberTooltipState(),
-                                                    ) {
-                                                        TranslucentTopAppBarIconButton(
-                                                            onClick = { navController.navigate("news") },
-                                                        ) {
-                                                            BadgedBox(badge = {
-                                                                if (hasUnreadNews) {
-                                                                    Badge()
-                                                                }
-                                                            }) {
-                                                                Icon(
-                                                                    painter = painterResource(R.drawable.newspaper),
-                                                                    contentDescription = stringResource(R.string.news),
-                                                                )
-                                                            }
-                                                        }
-                                                    }
+                                                    // News feed button removed: it pulled ArchiveTune's own
+                                                    // announcements (raw.githubusercontent.com/koiverse/
+                                                    // ArchiveTuneNewsRepository), which would show as if they
+                                                    // were Mussiech's. Re-enable once Mussiech has its own
+                                                    // news repo (see roadmap in project memory).
                                                     TranslucentTopAppBarIconButton(
                                                         onClick = { navController.navigate("new_release") },
                                                     ) {
@@ -2318,9 +2284,6 @@ class MainActivity : ComponentActivity() {
                                                 },
                                                 onMusicRecognitionClick = {
                                                     navController.navigate(MusicRecognitionRoute)
-                                                },
-                                                onMusicTogetherClick = {
-                                                    navController.navigate("settings/music_together")
                                                 },
                                             )
                                         }
@@ -3014,7 +2977,6 @@ private fun HomeOverflowFab(
     onExpandedChange: (Boolean) -> Unit,
     onShuffleClick: () -> Unit,
     onMusicRecognitionClick: () -> Unit,
-    onMusicTogetherClick: () -> Unit,
 ) {
     val menuItemColors =
         MenuDefaults.itemColors(
@@ -3062,21 +3024,7 @@ private fun HomeOverflowFab(
                 },
                 colors = menuItemColors,
             )
-            DropdownMenuItem(
-                text = { Text(stringResource(R.string.music_together)) },
-                onClick = {
-                    onExpandedChange(false)
-                    onMusicTogetherClick()
-                },
-                leadingIcon = {
-                    HomeOverflowMenuIcon(
-                        iconRes = R.drawable.multi_user,
-                        contentDescription = null,
-                        pureBlack = pureBlack,
-                    )
-                },
-                colors = menuItemColors,
-            )
+            // Music Together menu item removed: see the note in AccountSettings.kt.
             DropdownMenuItem(
                 text = { Text(stringResource(R.string.shuffle)) },
                 onClick = {

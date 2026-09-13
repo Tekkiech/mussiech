@@ -597,26 +597,8 @@ fun PlayerMenu(
                                     )
                                 },
                             )
-                            if (!isLocalMedia) {
-                                add(
-                                    NewAction(
-                                        icon = {
-                                            Icon(
-                                                painter = painterResource(R.drawable.fire),
-                                                contentDescription = null,
-                                                modifier = Modifier.size(28.dp),
-                                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                                            )
-                                        },
-                                        text = stringResource(R.string.music_together),
-                                        onClick = {
-                                            onDismiss()
-                                            playerBottomSheetState.snapTo(playerBottomSheetState.collapsedBound)
-                                            navController.navigate("settings/music_together")
-                                        },
-                                    ),
-                                )
-                            }
+                            // Music Together menu action removed: see the note in
+                            // AccountSettings.kt - depends on ArchiveTune's own sync server.
                             if (isQueueTrigger != true) {
                                 val aodBgColor = if (aodFeatureEnabled) MaterialTheme.colorScheme.primary else Color.Unspecified
                                 val aodContentColor = if (aodFeatureEnabled) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant

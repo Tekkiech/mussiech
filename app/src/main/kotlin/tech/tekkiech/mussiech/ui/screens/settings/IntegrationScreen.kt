@@ -74,17 +74,12 @@ fun IntegrationScreen(navController: NavController) {
                 .verticalScroll(rememberScrollState())
                 .padding(bottom = SettingsDimensions.ScreenBottomPadding),
         ) {
-            PreferenceGroup(title = stringResource(R.string.general)) {
-                item {
-                    PreferenceEntry(
-                        title = { Text(stringResource(R.string.discord_integration)) },
-                        icon = { Icon(painterResource(R.drawable.discord), null) },
-                        onClick = {
-                            navController.navigate("settings/discord")
-                        },
-                    )
-                }
-            }
+            // Discord Rich Presence entry removed: its fallback status-icon images are
+            // fetched from ArchiveTune's own GitHub raw content, which would show stale
+            // or broken artwork under the Mussiech name. Re-enable once Mussiech hosts
+            // its own RPC assets (see roadmap in project memory) - PreferenceGroup
+            // auto-hides itself when empty, so removing this "General" group's only
+            // item here is enough, no group-level change needed.
 
             PreferenceGroup(title = stringResource(R.string.scrobbling)) {
                 item {
