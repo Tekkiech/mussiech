@@ -206,6 +206,17 @@ android {
                 keyPassword = releaseKeyPassword
             }
         }
+        getByName("debug") {
+            // Use the checked-in keystore instead of each machine's own
+            // auto-generated ~/.android/debug.keystore, so a debug APK
+            // built on arch-server and one built locally have matching
+            // signatures and `adb install -r` doesn't reject one as an
+            // incompatible update over the other.
+            storeFile = file("persistent-debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
     }
 
     buildTypes {
