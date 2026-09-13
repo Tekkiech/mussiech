@@ -37,6 +37,15 @@ fun buildSettingsGroups(
             accentColor = MaterialTheme.colorScheme.primary,
             onClick = { navController.navigate("settings/account") },
         )
+    val navidromeServer =
+        SettingsItem(
+            key = "navidrome",
+            icon = painterResource(R.drawable.website),
+            title = stringResource(R.string.navidrome_server),
+            subtitle = stringResource(R.string.settings_navidrome_subtitle),
+            accentColor = MaterialTheme.colorScheme.primary,
+            onClick = { navController.navigate("settings/navidrome") },
+        )
     val stats =
         SettingsItem(
             key = "stats",
@@ -229,7 +238,7 @@ fun buildSettingsGroups(
     return listOf(
         SettingsGroup(
             title = stringResource(R.string.settings),
-            items = listOf(account, stats),
+            items = listOf(navidromeServer, account, stats),
         ),
         SettingsGroup(
             title = stringResource(R.string.settings_section_player_content),

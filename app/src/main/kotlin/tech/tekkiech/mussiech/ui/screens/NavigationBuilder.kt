@@ -70,6 +70,7 @@ import tech.tekkiech.mussiech.ui.screens.settings.LogcatScreen
 import tech.tekkiech.mussiech.ui.screens.settings.LyricsAnimationSettings
 import tech.tekkiech.mussiech.ui.screens.settings.LyricsSettings
 import tech.tekkiech.mussiech.ui.screens.settings.MusicTogetherScreen
+import tech.tekkiech.mussiech.ui.screens.settings.NavidromeServerSettings
 import tech.tekkiech.mussiech.ui.screens.settings.PalettePickerScreen
 import tech.tekkiech.mussiech.ui.screens.settings.PlayerSettings
 import tech.tekkiech.mussiech.ui.screens.settings.PrivacySettings
@@ -401,6 +402,9 @@ fun NavGraphBuilder.navigationBuilder(
             latestVersionName = latestVersionName(),
             viewModel = homeViewModel,
         )
+    }
+    composable("settings/navidrome") {
+        NavidromeServerSettings(navController)
     }
     composable("settings/hidden_playlists") {
         HiddenPlaylistsScreen(navController)
