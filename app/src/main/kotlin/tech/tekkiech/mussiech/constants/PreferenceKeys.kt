@@ -919,6 +919,14 @@ val TogetherOnlineEndpointLastCheckedAtKey = longPreferencesKey("together_online
 
 val RedownloadOnRestoreKey = booleanPreferencesKey("redownloadOnRestore")
 
+// Navidrome/Subsonic server connection. Only the salt+token pair is stored,
+// never the plaintext password - the Subsonic auth scheme is designed so the
+// password isn't needed again once the token is derived.
+val NavidromeServerUrlKey = stringPreferencesKey("navidromeServerUrl")
+val NavidromeUsernameKey = stringPreferencesKey("navidromeUsername")
+val NavidromeSaltKey = stringPreferencesKey("navidromeSalt")
+val NavidromeTokenKey = stringPreferencesKey("navidromeToken")
+
 enum class UpdateChannel {
     STABLE,
     ARTIFACT,
