@@ -58,11 +58,11 @@ val hasReleaseSigningConfig =
         releaseKeyAlias != null &&
         releaseKeyPassword != null
 android {
-    namespace = "moe.rukamori.archivetune"
+    namespace = "tech.tekkiech.mussiech"
     compileSdk = 37
 
     defaultConfig {
-    applicationId = "moe.rukamori.archivetune"
+    applicationId = "tech.tekkiech.mussiech"
         minSdk = 26
         targetSdk = 37
         versionCode = 140
@@ -118,11 +118,11 @@ android {
         val githubOwner =
             System.getenv("GITHUB_OWNER")?.trim()
                 ?: localProperties.getProperty("GITHUB_OWNER")?.trim()
-                ?: "rukamori"
+                ?: "Tekkiech"
         val githubRepo =
             System.getenv("GITHUB_REPO")?.trim()
                 ?: localProperties.getProperty("GITHUB_REPO")?.trim()
-                ?: "ArchiveTune"
+                ?: "mussiech"
         buildConfigField("String", "GITHUB_OWNER", githubOwner.asBuildConfigString())
         buildConfigField("String", "GITHUB_REPO", githubRepo.asBuildConfigString())
         buildConfigField("boolean", "IS_NIGHTLY_BUILD", "false")
@@ -441,7 +441,7 @@ androidComponents {
                 metadataFile.set(rootProject.layout.projectDirectory.file("IconPack/metadata.json"))
                 svgDirectory.set(rootProject.layout.projectDirectory.dir("IconPack/svg"))
                 applicationId.set(variant.applicationId)
-                targetActivityClassName.set("moe.rukamori.archivetune.MainActivity")
+                targetActivityClassName.set("tech.tekkiech.mussiech.MainActivity")
                 resourceOutputDirectory.set(
                     layout.buildDirectory.dir("generated/iconPack/${variant.name}/res"),
                 )

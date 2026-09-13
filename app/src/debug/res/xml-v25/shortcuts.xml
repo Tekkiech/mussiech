@@ -6,9 +6,9 @@
         android:shortcutId="search"
         android:shortcutShortLabel="@string/search">
         <intent
-            android:action="moe.rukamori.archivetune.action.SEARCH"
-            android:targetClass="moe.rukamori.archivetune.MainActivity"
-            android:targetPackage="moe.rukamori.archivetune.debug" />
+            android:action="tech.tekkiech.mussiech.action.SEARCH"
+            android:targetClass="tech.tekkiech.mussiech.MainActivity"
+            android:targetPackage="tech.tekkiech.mussiech.debug" />
     </shortcut>
     <shortcut
         android:enabled="true"
@@ -16,8 +16,8 @@
         android:shortcutId="library"
         android:shortcutShortLabel="@string/filter_library">
         <intent
-            android:action="moe.rukamori.archivetune.action.LIBRARY"
-            android:targetClass="moe.rukamori.archivetune.MainActivity"
-            android:targetPackage="moe.rukamori.archivetune.debug" />
+            android:action="tech.tekkiech.mussiech.action.LIBRARY"
+            android:targetClass="tech.tekkiech.mussiech.MainActivity"
+            android:targetPackage="tech.tekkiech.mussiech.debug" />
     </shortcut>
 </shortcuts>
