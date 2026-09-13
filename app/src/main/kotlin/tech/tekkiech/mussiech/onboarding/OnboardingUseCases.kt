@@ -220,6 +220,10 @@ class BuildOnboardingUiStateUseCase
                     ),
                 )
 
+            // Discord/Telegram/donate tiles removed: the upstream URLs pointed at
+            // ArchiveTune's own community/donation infrastructure, which would have
+            // misdirected Mussiech users under the wrong brand. Add them back once
+            // Mussiech has its own real destinations for these.
             val communityActions =
                 ImmutableList.of(
                     OnboardingCommunityActionUiModel(
@@ -227,28 +231,7 @@ class BuildOnboardingUiStateUseCase
                         titleResId = R.string.support_development_star,
                         descriptionResId = R.string.onboarding_community_github_desc,
                         iconResId = R.drawable.github,
-                        url = "https://github.com/rukamori/ArchiveTune",
-                    ),
-                    OnboardingCommunityActionUiModel(
-                        id = "discord",
-                        titleResId = R.string.onboarding_community_discord_title,
-                        descriptionResId = R.string.onboarding_community_telegram_desc,
-                        iconResId = R.drawable.discord,
-                        url = "https://discord.gg/XF2fpb9rTq",
-                    ),
-                    OnboardingCommunityActionUiModel(
-                        id = "telegram",
-                        titleResId = R.string.onboarding_community_telegram_title,
-                        descriptionResId = R.string.onboarding_community_telegram_desc,
-                        iconResId = R.drawable.telegram,
-                        url = "https://t.me/ArchiveTuneGC",
-                    ),
-                    OnboardingCommunityActionUiModel(
-                        id = "donate",
-                        titleResId = R.string.about_content_desc_donate,
-                        descriptionResId = R.string.onboarding_community_donate_desc,
-                        iconResId = R.drawable.coffee,
-                        url = "https://koiiverse.cloud/donate",
+                        url = "https://github.com/Tekkiech/mussiech",
                     ),
                 )
         }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Mussiech pixel-note mark. A single eighth note built from a grid of
+  square modules, echoing tekkiech.tech's pixel/checkerboard heart mark
+  while staying on a music motif. Centered within the adaptive icon's
+  66dp safe zone (21..87 on this 108x108 viewport).
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- flag -->
+    <path android:fillColor="#0B334F" android:pathData="M55,30h8v8h-8z" />
+    <path android:fillColor="#0B334F" android:pathData="M65,30h8v8h-8z" />
+    <!-- stem -->
+    <path android:fillColor="#0B334F" android:pathData="M65,40h8v8h-8z" />
+    <path android:fillColor="#0B334F" android:pathData="M65,50h8v8h-8z" />
+    <!-- notehead -->
+    <path android:fillColor="#0B334F" android:pathData="M35,60h8v8h-8z" />
+    <path android:fillColor="#0B334F" android:pathData="M45,60h8v8h-8z" />
+    <path android:fillColor="#0B334F" android:pathData="M55,60h8v8h-8z" />
+    <path android:fillColor="#0B334F" android:pathData="M65,60h8v8h-8z" />
+    <path android:fillColor="#0B334F" android:pathData="M35,70h8v8h-8z" />
+    <path android:fillColor="#0B334F" android:pathData="M45,70h8v8h-8z" />
+    <path android:fillColor="#0B334F" android:pathData="M55,70h8v8h-8z" />
+    <path android:fillColor="#0B334F" android:pathData="M65,70h8v8h-8z" />
+</vector>

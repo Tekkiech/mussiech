@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Themed-icon (Android 13+) layer. Fill color is ignored by the system tint, only the shape/alpha matters. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path android:fillColor="#000000" android:pathData="M55,30h8v8h-8z" />
+    <path android:fillColor="#000000" android:pathData="M65,30h8v8h-8z" />
+    <path android:fillColor="#000000" android:pathData="M65,40h8v8h-8z" />
+    <path android:fillColor="#000000" android:pathData="M65,50h8v8h-8z" />
+    <path android:fillColor="#000000" android:pathData="M35,60h8v8h-8z" />
+    <path android:fillColor="#000000" android:pathData="M45,60h8v8h-8z" />
+    <path android:fillColor="#000000" android:pathData="M55,60h8v8h-8z" />
+    <path android:fillColor="#000000" android:pathData="M65,60h8v8h-8z" />
+    <path android:fillColor="#000000" android:pathData="M35,70h8v8h-8z" />
+    <path android:fillColor="#000000" android:pathData="M45,70h8v8h-8z" />
+    <path android:fillColor="#000000" android:pathData="M55,70h8v8h-8z" />
+    <path android:fillColor="#000000" android:pathData="M65,70h8v8h-8z" />
+</vector>
