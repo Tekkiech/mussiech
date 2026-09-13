@@ -1087,5 +1087,5 @@
     <string name="scheduled_backup_directory_saved">Diretório de cópias de segurança guardado</string>
     <string name="scheduled_backup_load_failed">Não foi possível carregar as configurações de cópia de segurança programadas</string>
     <string name="scheduled_backup_update_failed">Não foi possível guardar as configurações de cópia de segurança programadas</string>
-    <string name="gatekeeper_connection_blocked">Ligação bloqueada pelo ArchiveTune Remote. Não foi possível verificar se esta aplicação é uma versão oficial do ArchiveTune. Instala uma versão oficial em https://github.com/rukamori/ArchiveTune ou https://t.me/ArchiveTuneGC.</string>
+    <string name="gatekeeper_connection_blocked">Ligação bloqueada pelo Mussiech Remote. Não foi possível verificar se esta aplicação é uma versão oficial do Mussiech. Instala uma versão oficial em https://github.com/Tekkiech/mussiech.</string>
 </resources>

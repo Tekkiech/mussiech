@@ -1117,7 +1117,7 @@
     <string name="scheduled_backup_directory_saved">تم حفظ دليل النسخ الاحتياطي</string>
     <string name="scheduled_backup_load_failed">تعذر تحميل إعدادات النسخ الاحتياطي المجدول</string>
     <string name="scheduled_backup_update_failed">تعذر حفظ إعدادات النسخ الاحتياطي المجدول</string>
-    <string name="gatekeeper_connection_blocked">تم حظر الاتصال بواسطة ArchiveTune Remote. لم يتم التحقق من هذا التطبيق كإصدار رسمي من ArchiveTune. قم بتثبيت إصدار رسمي من https://github.com/rukamori/ArchiveTune أو https://t.me/ArchiveTuneGC.</string>
+    <string name="gatekeeper_connection_blocked">تم حظر الاتصال بواسطة Mussiech Remote. لم يتم التحقق من هذا التطبيق كإصدار رسمي من Mussiech. قم بتثبيت إصدار رسمي من https://github.com/Tekkiech/mussiech.</string>
     <string name="updates_channel_warning_artifact_unstable">تُوفر إصدارات Canary للاختبار والوصول المبكر فقط.\nالاستقرار، التوافق، والوظائف غير مضمونة.</string>
     <string name="updates_channel_warning_artifact_acknowledgement">ملاحظة: التنزيل مباشرة من GitHub يتجاوز أي فحص إضافي يجريه المتجر الذي ربما ثبّت التطبيق منه سابقًا.\nبالمتابعة، فإنك تقر بأن إصدارات Canary قد تكون غير مستقرة وتتحمل مسؤولية استخدامها.</string>
     <string name="updates_artifact_channel_confirmation">التبديل إلى قناة Canary لتلقي إصدارات التطوير.\n\nتُحمل إصدارات Canary تلقائيًا من أحدث فرع تطوير.\nملاحظة: التنزيل مباشرة من GitHub يتجاوز أي فحص إضافي يجريه المتجر الذي ربما ثبّت التطبيق منه سابقًا.</string>

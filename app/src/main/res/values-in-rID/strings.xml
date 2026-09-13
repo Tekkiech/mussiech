@@ -1065,5 +1065,5 @@
     <string name="scheduled_backup_directory_saved">Direktori pencadangan disimpan</string>
     <string name="scheduled_backup_load_failed">Pengaturan pencadangan terjadwal tidak dapat dimuat</string>
     <string name="scheduled_backup_update_failed">Pengaturan pencadangan terjadwal tidak dapat disimpan</string>
-    <string name="gatekeeper_connection_blocked">Koneksi diblokir oleh ArchiveTune Remote. Aplikasi ini tidak dapat diverifikasi sebagai build ArchiveTune resmi. Instal build resmi dari https://github.com/rukamori/ArchiveTune atau https://t.me/ArchiveTuneGC.</string>
+    <string name="gatekeeper_connection_blocked">Koneksi diblokir oleh Mussiech Remote. Aplikasi ini tidak dapat diverifikasi sebagai build Mussiech resmi. Instal build resmi dari https://github.com/Tekkiech/mussiech.</string>
 </resources>

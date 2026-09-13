@@ -996,7 +996,7 @@
     <string name="together_welcome_host_title">Hoste eine Sitzung</string>
     <string name="together_welcome_join_body">Öffne den geteilten Link oder gib den Code ein und tippe Beitreten. Deine Warteschlange und Wiedergabe werden dem Host folgen.</string>
     <string name="together_welcome_permissions_body">Hosts können entscheiden, ob Gäste Songs hinzufügen oder die Wiedergabe kontrollieren können und ob sie eine Bestätigung zum Beitritt benötigen.</string>
-    <string name="gatekeeper_connection_blocked">Verbindung durch ArchiveTune Remote blockiert. Diese App konnte nicht als offizieller ArchiveTune-Build verifiziert werden. Installiere einen offiziellen Build von https://github.com/rukamori/ArchiveTune oder https://t.me/ArchiveTuneGC.</string>
+    <string name="gatekeeper_connection_blocked">Verbindung durch Mussiech Remote blockiert. Diese App konnte nicht als offizieller Mussiech-Build verifiziert werden. Installiere einen offiziellen Build von https://github.com/Tekkiech/mussiech.</string>
     <string name="scheduled_backup_disabled_description">Automatische Sicherungen sind pausiert.</string>
     <string name="scheduled_backup_enabled_description">Sicherungen laufen automatisch nach dem untenstehenden Plan.</string>
     <string name="together_welcome_host_body">Tippe Sitzung starten und teile dann den Sitzungslink. Lasse ArchiveTune während dem Hosten im Hintergrund offen.</string>

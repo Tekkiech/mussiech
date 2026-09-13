@@ -1076,5 +1076,5 @@
     <string name="scheduled_backup_directory_saved">متبادل کی ڈائریکٹری محفوظ ہوئ</string>
     <string name="scheduled_backup_load_failed">جدول متبادل کی ترتیب لادی نہ جا سکیں</string>
     <string name="scheduled_backup_update_failed">جدول متبادل کی ترتیبات محفوظ نہ ہو سکیں</string>
-    <string name="gatekeeper_connection_blocked">‪‫‪‫ArchiveTune Remote نے رابطہ مسدود کردیا۔ اس ایپ کی بطور آفیشل ArchiveTune تعمیر تصدیق نہیں ہو سکی۔ آفیشل تعمیر https://github.com/rukamori/ArchiveTune یا https://t.me/ArchiveTuneGC سے نصب کریں۔</string>
+    <string name="gatekeeper_connection_blocked">‪‫‪‫Mussiech Remote نے رابطہ مسدود کردیا۔ اس ایپ کی بطور آفیشل Mussiech تعمیر تصدیق نہیں ہو سکی۔ آفیشل تعمیر https://github.com/Tekkiech/mussiech سے نصب کریں۔</string>
 </resources>
