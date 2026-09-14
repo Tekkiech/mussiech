@@ -109,9 +109,7 @@ fun NavGraphBuilder.navigationBuilder(
         SearchScreen(
             navController = navController,
             onSearchClick = {
-                navController.currentBackStackEntry
-                    ?.savedStateHandle
-                    ?.set("openSearch", true)
+                navController.navigate("navidrome_search")
             },
             headerScrollConnection = searchScrollConnection,
         )
@@ -265,6 +263,9 @@ fun NavGraphBuilder.navigationBuilder(
             ),
     ) {
         tech.tekkiech.mussiech.ui.screens.navidrome.NavidromePlaylistScreen(navController, scrollBehavior)
+    }
+    composable("navidrome_search") {
+        tech.tekkiech.mussiech.ui.screens.navidrome.NavidromeSearchScreen(navController)
     }
     composable(
         route = PodcastRoute,

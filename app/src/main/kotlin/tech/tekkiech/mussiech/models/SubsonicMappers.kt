@@ -6,6 +6,7 @@
 package tech.tekkiech.mussiech.models
 
 import dev.zt64.subsonic.api.model.Album as SubsonicAlbum
+import dev.zt64.subsonic.api.model.Artist as SubsonicArtist
 import dev.zt64.subsonic.api.model.Playlist as SubsonicPlaylist
 import dev.zt64.subsonic.api.model.Song as SubsonicSong
 import tech.tekkiech.mussiech.playback.stream.StreamSource
@@ -55,6 +56,14 @@ fun SubsonicPlaylist.toNavidromePlaylist(coverArtUrl: String?): NavidromePlaylis
         owner = owner,
         songCount = songCount,
         thumbnailUrl = coverArtUrl,
+    )
+
+fun SubsonicArtist.toNavidromeArtist(coverArtUrl: String?): NavidromeArtist =
+    NavidromeArtist(
+        id = id,
+        name = name,
+        albumCount = albumCount,
+        thumbnailUrl = coverArtUrl ?: artistImageUrl,
     )
 
 private fun kotlin.time.Instant.toLocalDateTimeUtc(): LocalDateTime =

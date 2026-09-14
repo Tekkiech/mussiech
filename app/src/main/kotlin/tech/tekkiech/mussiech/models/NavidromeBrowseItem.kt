@@ -24,3 +24,11 @@ data class NavidromePlaylist(
     val songCount: Int,
     val thumbnailUrl: String?,
 )
+
+@Immutable
+data class NavidromeArtist(
+    val id: String,
+    val name: String,
+    val albumCount: Int,
+    val thumbnailUrl: String?,
+)
