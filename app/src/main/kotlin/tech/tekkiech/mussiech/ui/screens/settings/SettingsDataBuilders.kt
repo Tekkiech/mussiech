@@ -46,6 +46,15 @@ fun buildSettingsGroups(
             accentColor = MaterialTheme.colorScheme.primary,
             onClick = { navController.navigate("settings/navidrome") },
         )
+    val aurralServer =
+        SettingsItem(
+            key = "aurral",
+            icon = painterResource(R.drawable.website),
+            title = stringResource(R.string.aurral_server),
+            subtitle = stringResource(R.string.settings_aurral_subtitle),
+            accentColor = MaterialTheme.colorScheme.primary,
+            onClick = { navController.navigate("settings/aurral") },
+        )
     val stats =
         SettingsItem(
             key = "stats",
@@ -238,7 +247,7 @@ fun buildSettingsGroups(
     return listOf(
         SettingsGroup(
             title = stringResource(R.string.settings),
-            items = listOf(navidromeServer, account, stats),
+            items = listOf(navidromeServer, aurralServer, account, stats),
         ),
         SettingsGroup(
             title = stringResource(R.string.settings_section_player_content),

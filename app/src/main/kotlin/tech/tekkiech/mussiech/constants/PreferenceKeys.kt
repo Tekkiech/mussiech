@@ -927,6 +927,13 @@ val NavidromeUsernameKey = stringPreferencesKey("navidromeUsername")
 val NavidromeSaltKey = stringPreferencesKey("navidromeSalt")
 val NavidromeTokenKey = stringPreferencesKey("navidromeToken")
 
+// aurral (music request/discovery layer in front of Lidarr). Auth is a single
+// instance-wide API key, not per-user credentials - see AurralAuthRepository.
+val AurralServerUrlKey = stringPreferencesKey("aurralServerUrl")
+val AurralApiKeyKey = stringPreferencesKey("aurralApiKey")
+val AurralRootFolderPathKey = stringPreferencesKey("aurralRootFolderPath")
+val AurralQualityProfileIdKey = intPreferencesKey("aurralQualityProfileId")
+
 enum class UpdateChannel {
     STABLE,
     ARTIFACT,

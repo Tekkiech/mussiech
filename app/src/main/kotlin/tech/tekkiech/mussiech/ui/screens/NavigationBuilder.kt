@@ -70,6 +70,8 @@ import tech.tekkiech.mussiech.ui.screens.settings.LogcatScreen
 import tech.tekkiech.mussiech.ui.screens.settings.LyricsAnimationSettings
 import tech.tekkiech.mussiech.ui.screens.settings.LyricsSettings
 import tech.tekkiech.mussiech.ui.screens.settings.MusicTogetherScreen
+import tech.tekkiech.mussiech.ui.screens.settings.AurralRequestsScreen
+import tech.tekkiech.mussiech.ui.screens.settings.AurralServerSettings
 import tech.tekkiech.mussiech.ui.screens.settings.NavidromeServerSettings
 import tech.tekkiech.mussiech.ui.screens.settings.PalettePickerScreen
 import tech.tekkiech.mussiech.ui.screens.settings.PlayerSettings
@@ -428,6 +430,12 @@ fun NavGraphBuilder.navigationBuilder(
     }
     composable("settings/navidrome") {
         NavidromeServerSettings(navController)
+    }
+    composable("settings/aurral") {
+        AurralServerSettings(navController)
+    }
+    composable("settings/aurral/requests") {
+        AurralRequestsScreen(navController)
     }
     composable("settings/hidden_playlists") {
         HiddenPlaylistsScreen(navController)
