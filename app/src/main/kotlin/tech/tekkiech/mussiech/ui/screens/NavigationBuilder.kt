@@ -245,6 +245,28 @@ fun NavGraphBuilder.navigationBuilder(
         AlbumScreen(navController, scrollBehavior)
     }
     composable(
+        route = "navidrome_album/{albumId}",
+        arguments =
+            listOf(
+                navArgument("albumId") {
+                    type = NavType.StringType
+                },
+            ),
+    ) {
+        tech.tekkiech.mussiech.ui.screens.navidrome.NavidromeAlbumScreen(navController, scrollBehavior)
+    }
+    composable(
+        route = "navidrome_playlist/{playlistId}",
+        arguments =
+            listOf(
+                navArgument("playlistId") {
+                    type = NavType.StringType
+                },
+            ),
+    ) {
+        tech.tekkiech.mussiech.ui.screens.navidrome.NavidromePlaylistScreen(navController, scrollBehavior)
+    }
+    composable(
         route = PodcastRoute,
         arguments =
             listOf(

@@ -14,9 +14,9 @@ import tech.tekkiech.mussiech.constants.QuickPicks
 import tech.tekkiech.mussiech.constants.QuickPicksDisplayMode
 import tech.tekkiech.mussiech.db.entities.LocalItem
 import tech.tekkiech.mussiech.db.entities.Song
-import moe.rukamori.archivetune.innertube.models.PlaylistItem
 import moe.rukamori.archivetune.innertube.pages.HomePage
-import tech.tekkiech.mussiech.models.SimilarRecommendation
+import tech.tekkiech.mussiech.models.NavidromeAlbum
+import tech.tekkiech.mussiech.models.NavidromePlaylist
 import tech.tekkiech.mussiech.podcast.PodcastPlaybackRequest
 
 sealed interface HomeScreenState {
@@ -41,31 +41,17 @@ data class HomeUiState(
     val speedDialItems: ImmutableList<LocalItem>,
     val forgottenFavorites: ImmutableList<Song>,
     val keepListening: ImmutableList<LocalItem>,
-    val similarRecommendations: ImmutableList<SimilarRecommendation>,
-    val accountPlaylists: ImmutableList<PlaylistItem>,
-    val homePage: HomePage?,
+    val navidromePlaylists: ImmutableList<NavidromePlaylist>,
+    val navidromeHomeAlbums: ImmutableList<NavidromeAlbum>,
     val remoteQuickPicks: HomePage.Section?,
-    val selectedChip: HomePage.Chip?,
-    val accountName: String,
-    val accountImageUrl: String?,
     val quickPicksMode: QuickPicks,
     val quickPicksDisplayMode: QuickPicksDisplayMode,
-    val showCategoryChips: Boolean,
     val showTonalBackdrop: Boolean,
     val isRefreshing: Boolean,
-    val isLoadingMore: Boolean,
 )
 
 sealed interface HomeAction {
     data object Refresh : HomeAction
-
-    data class SelectChip(
-        val chip: HomePage.Chip?,
-    ) : HomeAction
-
-    data class LoadMore(
-        val continuation: String?,
-    ) : HomeAction
 
     data class OpenRemoteItem(
         val itemId: String,

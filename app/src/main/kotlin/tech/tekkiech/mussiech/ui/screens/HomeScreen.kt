@@ -127,36 +127,10 @@ fun HomeScreen(
 
     val successState = screenState as? HomeScreenState.Success
     val uiState = successState?.uiState
-    val selectedChip = uiState?.selectedChip
-
-    LaunchedEffect(uiState?.homePage?.continuation) {
-        val continuation = uiState?.homePage?.continuation ?: return@LaunchedEffect
-        snapshotFlow {
-            val layoutInfo = lazyListState.layoutInfo
-            val lastVisibleIndex = layoutInfo.visibleItemsInfo.lastOrNull()?.index
-            lastVisibleIndex != null && lastVisibleIndex >= layoutInfo.totalItemsCount - 3
-        }.collect { shouldLoadMore ->
-            if (shouldLoadMore) {
-                viewModel.onAction(HomeAction.LoadMore(continuation))
-            }
-        }
-    }
 
     LaunchedEffect(uiState?.forgottenFavorites) {
         if (uiState != null) {
             forgottenFavoritesGridState.scrollToItem(0)
-        }
-    }
-
-    if (selectedChip != null) {
-        BackHandler {
-            viewModel.onAction(HomeAction.SelectChip(selectedChip))
-        }
-    }
-
-    LaunchedEffect(uiState?.showCategoryChips, selectedChip) {
-        if (uiState?.showCategoryChips == false && selectedChip != null) {
-            viewModel.onAction(HomeAction.SelectChip(selectedChip))
         }
     }
 
@@ -344,20 +318,6 @@ private fun HomeContent(
                             .fillMaxWidth()
                             .align(Alignment.TopCenter),
                 ) {
-                    if (uiState.showCategoryChips) {
-                        item(
-                            key = "home_category_chips",
-                            contentType = "category_chips",
-                        ) {
-                            HomeCategoryChips(
-                                chips = uiState.homePage?.chips.orEmpty(),
-                                selectedChip = uiState.selectedChip,
-                                onChipSelected = { onAction(HomeAction.SelectChip(it)) },
-                                modifier = Modifier.animateItem(),
-                            )
-                        }
-                    }
-
                     if (remoteQuickPicks?.items?.isNotEmpty() == true) {
                         item(
                             key = "home_remote_quick_picks_header",
@@ -473,29 +433,49 @@ private fun HomeContent(
                         }
                     }
 
-                    if (uiState.accountPlaylists.isNotEmpty()) {
-                        sectionSpacer("account_playlists")
+                    if (uiState.navidromePlaylists.isNotEmpty()) {
+                        sectionSpacer("navidrome_playlists")
                         item(
-                            key = "home_account_playlists",
+                            key = "home_navidrome_playlists_header",
+                            contentType = "section_header",
+                        ) {
+                            HomeSectionHeader(
+                                title = stringResource(R.string.playlists),
+                                modifier = Modifier.animateItem(),
+                            )
+                        }
+                        item(
+                            key = "home_navidrome_playlists",
                             contentType = "media_shelf",
                         ) {
-                            Column(modifier = Modifier.animateItem()) {
-                                AccountPlaylistsTitle(
-                                    accountName = uiState.accountName,
-                                    accountImageUrl = uiState.accountImageUrl,
-                                    onClick = { navController.navigate("account") },
-                                )
-                                AccountPlaylistsSection(
-                                    accountPlaylists = uiState.accountPlaylists,
-                                    mediaMetadata = mediaMetadata,
-                                    isPlaying = isPlaying,
-                                    navController = navController,
-                                    playerConnection = playerConnection,
-                                    menuState = menuState,
-                                    haptic = haptic,
-                                    scope = scope,
-                                )
-                            }
+                            NavidromePlaylistsSection(
+                                playlists = uiState.navidromePlaylists,
+                                navController = navController,
+                                modifier = Modifier.animateItem(),
+                            )
+                        }
+                    }
+
+                    if (uiState.navidromeHomeAlbums.isNotEmpty()) {
+                        sectionSpacer("navidrome_albums")
+                        item(
+                            key = "home_navidrome_albums_header",
+                            contentType = "section_header",
+                        ) {
+                            HomeSectionHeader(
+                                title = stringResource(R.string.albums),
+                                modifier = Modifier.animateItem(),
+                            )
+                        }
+                        item(
+                            key = "home_navidrome_albums",
+                            contentType = "media_shelf",
+                        ) {
+                            NavidromeAlbumsSection(
+                                albums = uiState.navidromeHomeAlbums,
+                                navController = navController,
+                                modifier = Modifier.animateItem(),
+                            )
                         }
                     }
 
@@ -530,85 +510,6 @@ private fun HomeContent(
                         }
                     }
 
-                    uiState.similarRecommendations.forEach { recommendation ->
-                        sectionSpacer("similar_${recommendation.title.id}")
-                        item(
-                            key = "home_similar_header_${recommendation.title.id}",
-                            contentType = "section_header",
-                        ) {
-                            SimilarRecommendationsTitle(
-                                recommendation = recommendation,
-                                navController = navController,
-                                modifier = Modifier.animateItem(),
-                            )
-                        }
-                        item(
-                            key = "home_similar_${recommendation.title.id}",
-                            contentType = "media_shelf",
-                        ) {
-                            SimilarRecommendationsSection(
-                                recommendation = recommendation,
-                                mediaMetadata = mediaMetadata,
-                                isPlaying = isPlaying,
-                                navController = navController,
-                                playerConnection = playerConnection,
-                                menuState = menuState,
-                                haptic = haptic,
-                                scope = scope,
-                                modifier = Modifier.animateItem(),
-                            )
-                        }
-                    }
-
-                    uiState.homePage?.sections.orEmpty().forEachIndexed { index, section ->
-                        val sectionKey = "${section.endpoint?.browseId ?: section.title}_$index"
-                        sectionSpacer("remote_$sectionKey")
-                        item(
-                            key = "home_remote_header_$sectionKey",
-                            contentType = "section_header",
-                        ) {
-                            HomePageSectionTitle(
-                                section = section,
-                                navController = navController,
-                                modifier = Modifier.animateItem(),
-                            )
-                        }
-                        item(
-                            key = "home_remote_$sectionKey",
-                            contentType = "media_shelf",
-                        ) {
-                            HomePageSectionContent(
-                                section = section,
-                                mediaMetadata = mediaMetadata,
-                                isPlaying = isPlaying,
-                                navController = navController,
-                                playerConnection = playerConnection,
-                                menuState = menuState,
-                                haptic = haptic,
-                                scope = scope,
-                                onOpenRemoteItem = { itemId -> onAction(HomeAction.OpenRemoteItem(itemId)) },
-                                modifier = Modifier.animateItem(),
-                            )
-                        }
-                    }
-
-                    if (uiState.isLoadingMore) {
-                        item(
-                            key = "home_loading_more",
-                            contentType = "loading",
-                        ) {
-                            Box(
-                                contentAlignment = Alignment.Center,
-                                modifier =
-                                    Modifier
-                                        .fillMaxWidth()
-                                        .padding(32.dp)
-                                        .animateItem(),
-                            ) {
-                                LoadingIndicator()
-                            }
-                        }
-                    }
                 }
             }
         }

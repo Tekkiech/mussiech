@@ -1321,7 +1321,67 @@ fun ForgottenFavoritesSection(
 }
 
 /**
- * Account Playlists section - horizontal row of YouTube playlists
+ * Navidrome playlists shelf on Home.
+ */
+@Composable
+fun NavidromePlaylistsSection(
+    playlists: List<tech.tekkiech.mussiech.models.NavidromePlaylist>,
+    navController: NavController,
+    modifier: Modifier = Modifier,
+) {
+    LazyRow(
+        contentPadding =
+            WindowInsets.systemBars
+                .only(WindowInsetsSides.Horizontal)
+                .asPaddingValues(),
+        modifier = modifier,
+    ) {
+        items(
+            items = playlists,
+            key = { it.id },
+            contentType = { "navidrome_playlist" },
+        ) { playlist ->
+            tech.tekkiech.mussiech.ui.component.NavidromePlaylistListItem(
+                playlist = playlist,
+                modifier = Modifier.width(280.dp),
+                onClick = { navController.navigate("navidrome_playlist/${playlist.id}") },
+            )
+        }
+    }
+}
+
+/**
+ * Navidrome albums shelf on Home.
+ */
+@Composable
+fun NavidromeAlbumsSection(
+    albums: List<tech.tekkiech.mussiech.models.NavidromeAlbum>,
+    navController: NavController,
+    modifier: Modifier = Modifier,
+) {
+    LazyRow(
+        contentPadding =
+            WindowInsets.systemBars
+                .only(WindowInsetsSides.Horizontal)
+                .asPaddingValues(),
+        modifier = modifier,
+    ) {
+        items(
+            items = albums,
+            key = { it.id },
+            contentType = { "navidrome_album" },
+        ) { album ->
+            tech.tekkiech.mussiech.ui.component.NavidromeAlbumGridItem(
+                album = album,
+                onClick = { navController.navigate("navidrome_album/${album.id}") },
+            )
+        }
+    }
+}
+
+/**
+ * Account (YouTube) playlists shelf - kept for the YTM account flow, not currently
+ * rendered on Home (see NavidromePlaylistsSection for what Home shows instead).
  */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

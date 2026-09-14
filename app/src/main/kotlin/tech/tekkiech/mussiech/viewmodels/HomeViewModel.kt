@@ -17,8 +17,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -43,28 +41,25 @@ import tech.tekkiech.mussiech.constants.SpeedDialSongIdsKey
 import tech.tekkiech.mussiech.constants.YtmSyncKey
 import tech.tekkiech.mussiech.db.MusicDatabase
 import tech.tekkiech.mussiech.db.entities.*
-import tech.tekkiech.mussiech.extensions.filterBlockedArtists
 import tech.tekkiech.mussiech.extensions.toEnum
 import tech.tekkiech.mussiech.home.HomeAction
 import tech.tekkiech.mussiech.home.HomeEvent
 import tech.tekkiech.mussiech.home.HomePresentationPreferences
 import tech.tekkiech.mussiech.home.HomeScreenState
 import tech.tekkiech.mussiech.home.HomeUiState
+import tech.tekkiech.mussiech.home.LoadNavidromeHomeAlbumsUseCase
+import tech.tekkiech.mussiech.home.LoadNavidromeHomePlaylistsUseCase
 import tech.tekkiech.mussiech.home.LoadPersonalizedQuickPicksUseCase
 import tech.tekkiech.mussiech.home.ObserveHomePresentationPreferencesUseCase
 import moe.rukamori.archivetune.innertube.YouTube
 import moe.rukamori.archivetune.innertube.models.AccountChannel
 import moe.rukamori.archivetune.innertube.models.EpisodeItem
-import moe.rukamori.archivetune.innertube.models.PlaylistItem
 import moe.rukamori.archivetune.innertube.models.PodcastItem
-import moe.rukamori.archivetune.innertube.models.WatchEndpoint
 import moe.rukamori.archivetune.innertube.models.YTItem
-import moe.rukamori.archivetune.innertube.models.filterExplicit
-import moe.rukamori.archivetune.innertube.models.filterVideo
 import moe.rukamori.archivetune.innertube.pages.HomePage
-import moe.rukamori.archivetune.innertube.utils.completed
 import moe.rukamori.archivetune.innertube.utils.hasYouTubeLoginCookie
-import tech.tekkiech.mussiech.models.SimilarRecommendation
+import tech.tekkiech.mussiech.models.NavidromeAlbum
+import tech.tekkiech.mussiech.models.NavidromePlaylist
 import tech.tekkiech.mussiech.models.toMediaMetadata
 import tech.tekkiech.mussiech.podcast.PodcastPlaybackRequest
 import tech.tekkiech.mussiech.utils.SavedAccount
@@ -116,18 +111,14 @@ private data class HomeLocalContent(
 )
 
 private data class HomeRemoteContent(
-    val homePage: HomePage?,
     val remoteQuickPicks: HomePage.Section?,
-    val similarRecommendations: List<SimilarRecommendation>,
-    val accountPlaylists: List<PlaylistItem>,
-    val accountName: String,
-    val accountImageUrl: String?,
+    val navidromePlaylists: List<NavidromePlaylist>,
+    val navidromeHomeAlbums: List<NavidromeAlbum>,
 )
 
 private data class HomeContent(
     val local: HomeLocalContent,
     val remote: HomeRemoteContent,
-    val selectedChip: HomePage.Chip?,
 ) {
     val hasContent: Boolean
         get() =
@@ -136,9 +127,8 @@ private data class HomeContent(
                 local.forgottenFavorites.isNotEmpty() ||
                 local.keepListening.isNotEmpty() ||
                 remote.remoteQuickPicks?.items?.isNotEmpty() == true ||
-                remote.similarRecommendations.isNotEmpty() ||
-                remote.accountPlaylists.isNotEmpty() ||
-                remote.homePage?.sections?.any { it.items.isNotEmpty() } == true
+                remote.navidromePlaylists.isNotEmpty() ||
+                remote.navidromeHomeAlbums.isNotEmpty()
 }
 
 private data class HomeStateInputs(
@@ -148,10 +138,7 @@ private data class HomeStateInputs(
     val isInitialLoadComplete: Boolean,
     val loadError: Int?,
 ) {
-    fun toScreenState(
-        isRefreshing: Boolean,
-        isLoadingMore: Boolean,
-    ): HomeScreenState {
+    fun toScreenState(isRefreshing: Boolean): HomeScreenState {
         if (!isInitialLoadComplete) {
             return HomeScreenState.Loading
         }
@@ -172,19 +159,13 @@ private data class HomeStateInputs(
                 speedDialItems = ImmutableList.copyOf(content.local.speedDialItems),
                 forgottenFavorites = ImmutableList.copyOf(content.local.forgottenFavorites),
                 keepListening = ImmutableList.copyOf(content.local.keepListening),
-                similarRecommendations = ImmutableList.copyOf(content.remote.similarRecommendations),
-                accountPlaylists = ImmutableList.copyOf(content.remote.accountPlaylists),
-                homePage = content.remote.homePage,
+                navidromePlaylists = ImmutableList.copyOf(content.remote.navidromePlaylists),
+                navidromeHomeAlbums = ImmutableList.copyOf(content.remote.navidromeHomeAlbums),
                 remoteQuickPicks = content.remote.remoteQuickPicks,
-                selectedChip = content.selectedChip,
-                accountName = content.remote.accountName,
-                accountImageUrl = content.remote.accountImageUrl,
                 quickPicksDisplayMode = preferences.quickPicksDisplayMode,
                 quickPicksMode = preferences.quickPicksMode,
-                showCategoryChips = preferences.showCategoryChips,
                 showTonalBackdrop = preferences.showTonalBackdrop,
                 isRefreshing = isRefreshing,
-                isLoadingMore = isLoadingMore,
             ),
         )
     }
@@ -203,12 +184,13 @@ class HomeViewModel
         private val loadAiContentFilterPolicy: LoadAiContentFilterPolicyUseCase,
         private val filterAiContent: FilterAiContentUseCase,
         private val loadPersonalizedQuickPicksUseCase: LoadPersonalizedQuickPicksUseCase,
+        private val loadNavidromeHomePlaylistsUseCase: LoadNavidromeHomePlaylistsUseCase,
+        private val loadNavidromeHomeAlbumsUseCase: LoadNavidromeHomeAlbumsUseCase,
     ) : ViewModel() {
         private val isRefreshing = MutableStateFlow(false)
         private val isLoading = MutableStateFlow(false)
         private val isInitialLoadComplete = MutableStateFlow(false)
         private val loadError = MutableStateFlow<Int?>(null)
-        private val isLoadingMore = MutableStateFlow(false)
         private val homeLoadMutex = Mutex()
 
         private val quickPicksMode =
@@ -221,13 +203,9 @@ class HomeViewModel
         private val speedDialItems = MutableStateFlow<List<LocalItem>>(emptyList())
         private val forgottenFavorites = MutableStateFlow<List<Song>?>(null)
         private val keepListening = MutableStateFlow<List<LocalItem>?>(null)
-        private val similarRecommendations = MutableStateFlow<List<SimilarRecommendation>?>(null)
-        private val accountPlaylists = MutableStateFlow<List<PlaylistItem>?>(null)
-        private val homePage = MutableStateFlow<HomePage?>(null)
         private val remoteQuickPicks = MutableStateFlow<HomePage.Section?>(null)
-        private val selectedChip = MutableStateFlow<HomePage.Chip?>(null)
-        private val previousHomePage = MutableStateFlow<HomePage?>(null)
-        private val previousRemoteQuickPicks = MutableStateFlow<HomePage.Section?>(null)
+        private val navidromePlaylists = MutableStateFlow<List<NavidromePlaylist>?>(null)
+        private val navidromeHomeAlbums = MutableStateFlow<List<NavidromeAlbum>?>(null)
         private val accountRefreshGeneration = AtomicLong(0L)
 
         private val _allLocalItems = MutableStateFlow<List<LocalItem>>(emptyList())
@@ -267,34 +245,25 @@ class HomeViewModel
 
         private val remoteContent =
             combine(
-                homePage,
                 remoteQuickPicks,
-                similarRecommendations,
-                accountPlaylists,
-                accountName,
-            ) { homePage, remoteQuickPicks, similarRecommendations, accountPlaylists, accountName ->
+                navidromePlaylists,
+                navidromeHomeAlbums,
+            ) { remoteQuickPicks, navidromePlaylists, navidromeHomeAlbums ->
                 HomeRemoteContent(
-                    homePage = homePage,
                     remoteQuickPicks = remoteQuickPicks,
-                    similarRecommendations = similarRecommendations.orEmpty(),
-                    accountPlaylists = accountPlaylists.orEmpty(),
-                    accountName = accountName,
-                    accountImageUrl = null,
+                    navidromePlaylists = navidromePlaylists.orEmpty(),
+                    navidromeHomeAlbums = navidromeHomeAlbums.orEmpty(),
                 )
-            }.combine(accountImageUrl) { content, accountImageUrl ->
-                content.copy(accountImageUrl = accountImageUrl)
             }
 
         private val homeContent =
             combine(
                 localContent,
                 remoteContent,
-                selectedChip,
-            ) { localContent, remoteContent, selectedChip ->
+            ) { localContent, remoteContent ->
                 HomeContent(
                     local = localContent,
                     remote = remoteContent,
-                    selectedChip = selectedChip,
                 )
             }
 
@@ -313,15 +282,8 @@ class HomeViewModel
                     isInitialLoadComplete = isInitialLoadComplete,
                     loadError = loadError,
                 )
-            }.combine(
-                combine(isRefreshing, isLoadingMore) { isRefreshing, isLoadingMore ->
-                    isRefreshing to isLoadingMore
-                },
-            ) { inputs, loadingState ->
-                inputs.toScreenState(
-                    isRefreshing = loadingState.first,
-                    isLoadingMore = loadingState.second,
-                )
+            }.combine(isRefreshing) { inputs, isRefreshing ->
+                inputs.toScreenState(isRefreshing = isRefreshing)
             }.stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5_000),
@@ -329,18 +291,6 @@ class HomeViewModel
             )
 
         private var previousLoginState: Boolean? = null
-        private var chipLoadJob: Job? = null
-
-        private fun HomePage.extractQuickPicks(): Pair<HomePage, HomePage.Section?> {
-            val quickPicksIndex =
-                sections.indexOfFirst { section ->
-                    section.title.equals(context.getString(R.string.quick_picks), ignoreCase = true) ||
-                        section.title.contains("quick pick", ignoreCase = true)
-                }
-            if (quickPicksIndex < 0) return this to null
-
-            return copy(sections = sections.toMutableList().apply { removeAt(quickPicksIndex) }) to sections[quickPicksIndex]
-        }
 
         private suspend fun loadPersonalizedQuickPicks(): Boolean {
             if (quickPicksMode.first() != QuickPicks.QUICK_PICKS) return false
@@ -394,10 +344,7 @@ class HomeViewModel
         }
 
         private fun updateAllYtItems() {
-            _allYtItems.value =
-                similarRecommendations.value?.flatMap { it.items }.orEmpty() +
-                    remoteQuickPicks.value?.items.orEmpty() +
-                    homePage.value?.sections?.flatMap { it.items }.orEmpty()
+            _allYtItems.value = remoteQuickPicks.value?.items.orEmpty()
         }
 
         private suspend fun quickPicksWithFallback(primary: List<Song>): List<Song> {
@@ -526,15 +473,13 @@ class HomeViewModel
             loadError.value = null
 
             try {
-                val aiContentFilterPolicy = loadAiContentFilterPolicy()
                 supervisorScope {
-                    val hideExplicit = context.dataStore.get(HideExplicitKey, false)
-                    val hideVideo = context.dataStore.get(HideVideoKey, false)
-                    val blockedArtistIds = database.getBlockedArtistIds().toSet()
                     val fromTimeStamp = System.currentTimeMillis() - 86400000 * 7 * 2
 
                     launch { loadSpeedDialItems() }
-                    val personalizedQuickPicks = async { loadPersonalizedQuickPicks() }
+                    launch { loadPersonalizedQuickPicks() }
+                    launch { loadNavidromePlaylists() }
+                    launch { loadNavidromeHomeAlbums() }
                     launch {
                         forgottenFavorites.value =
                             database
@@ -572,50 +517,9 @@ class HomeViewModel
                                 .take(5)
                         keepListening.value = (keepListeningSongs + keepListeningAlbums + keepListeningArtists).shuffled()
                     }
-
-                    launch {
-                        val page =
-                            YouTube.home().getOrElse { throwable ->
-                                reportException(throwable)
-                                loadError.value = R.string.error_unknown
-                                return@launch
-                            }
-                        val filteredPage =
-                            page.copy(
-                                chips = page.chips,
-                                sections =
-                                    page.sections.map { section ->
-                                        section.copy(
-                                            items =
-                                                filterAiContent(
-                                                    section.items
-                                                        .filterExplicit(hideExplicit)
-                                                        .filterVideo(hideVideo)
-                                                        .filterBlockedArtists(blockedArtistIds),
-                                                    aiContentFilterPolicy,
-                                                ),
-                                        )
-                                    },
-                            )
-                        val (pageWithoutQuickPicks, remoteQuickPicksFallback) = filteredPage.extractQuickPicks()
-                        if (
-                            quickPicksMode.first() == QuickPicks.QUICK_PICKS &&
-                            !personalizedQuickPicks.await()
-                        ) {
-                            remoteQuickPicksFallback?.takeIf { it.items.isNotEmpty() }?.let { fallback ->
-                                remoteQuickPicks.value = fallback
-                            }
-                        }
-                        homePage.value = pageWithoutQuickPicks
-                    }
                 }
 
                 updateAllLocalItems()
-
-                viewModelScope.launch(Dispatchers.IO) {
-                    loadSimilarRecommendations()
-                }
-
                 updateAllYtItems()
 
                 isInitialLoadComplete.value = true
@@ -630,88 +534,28 @@ class HomeViewModel
             }
         }
 
-        private suspend fun loadSimilarRecommendations() {
-            val hideExplicit = context.dataStore.get(HideExplicitKey, false)
-            val hideVideo = context.dataStore.get(HideVideoKey, false)
-            val blockedArtistIds = database.getBlockedArtistIds().toSet()
-            val aiContentFilterPolicy = loadAiContentFilterPolicy()
-            val fromTimeStamp = System.currentTimeMillis() - 86400000 * 7 * 2
+        private suspend fun loadNavidromePlaylists() {
+            navidromePlaylists.value =
+                loadNavidromeHomePlaylistsUseCase().getOrElse { throwable ->
+                    if (throwable is CancellationException) throw throwable
+                    reportException(throwable)
+                    return
+                }
+        }
 
-            val artistRecommendations =
-                database
-                    .mostPlayedMusicArtists(fromTimeStamp, limit = 10)
-                    .first()
-                    .filter { it.artist.blockedAt == null && it.artist.isYouTubeArtist }
-                    .shuffled()
-                    .take(3)
-                    .mapNotNull {
-                        val items = mutableListOf<YTItem>()
-                        YouTube.artist(it.id).onSuccess { page ->
-                            items +=
-                                page.sections
-                                    .getOrNull(page.sections.size - 2)
-                                    ?.items
-                                    .orEmpty()
-                            items +=
-                                page.sections
-                                    .lastOrNull()
-                                    ?.items
-                                    .orEmpty()
-                        }
-                        SimilarRecommendation(
-                            title = it,
-                            items =
-                                filterAiContent(
-                                    items
-                                        .filterExplicit(hideExplicit)
-                                        .filterVideo(hideVideo)
-                                        .filterBlockedArtists(blockedArtistIds),
-                                    aiContentFilterPolicy,
-                                ).shuffled()
-                                    .ifEmpty { return@mapNotNull null },
-                        )
-                    }
-
-            val songRecommendations =
-                database
-                    .mostPlayedSongs(fromTimeStamp, limit = 10)
-                    .first()
-                    .filter { !it.song.isPodcast && it.album != null }
-                    .shuffled()
-                    .take(2)
-                    .mapNotNull { song ->
-                        val endpoint =
-                            YouTube.next(WatchEndpoint(videoId = song.id)).getOrNull()?.relatedEndpoint
-                                ?: return@mapNotNull null
-                        val page = YouTube.related(endpoint).getOrNull() ?: return@mapNotNull null
-                        SimilarRecommendation(
-                            title = song,
-                            items =
-                                filterAiContent(
-                                    (
-                                        page.songs.shuffled().take(8) +
-                                            page.albums.shuffled().take(4) +
-                                            page.artists.shuffled().take(4) +
-                                            page.playlists.shuffled().take(4)
-                                    ).filterExplicit(hideExplicit)
-                                        .filterVideo(hideVideo)
-                                        .filterBlockedArtists(blockedArtistIds),
-                                    aiContentFilterPolicy,
-                                ).shuffled()
-                                    .ifEmpty { return@mapNotNull null },
-                        )
-                    }
-
-            similarRecommendations.value = (artistRecommendations + songRecommendations).shuffled()
-
-            updateAllYtItems()
+        private suspend fun loadNavidromeHomeAlbums() {
+            navidromeHomeAlbums.value =
+                loadNavidromeHomeAlbumsUseCase().getOrElse { throwable ->
+                    if (throwable is CancellationException) throw throwable
+                    reportException(throwable)
+                    return
+                }
         }
 
         private fun clearAccountData() {
             accountRefreshGeneration.incrementAndGet()
             _accountName.value = ""
             _accountImageUrl.value = null
-            accountPlaylists.value = null
             _accountChannelsState.value = AccountChannelsState.Empty
         }
 
@@ -786,115 +630,6 @@ class HomeViewModel
                 isSelected = isSelected,
             )
 
-        private suspend fun refreshAccountPlaylistsInternal(refreshGeneration: Long) {
-            try {
-                YouTube
-                    .library("FEmusic_liked_playlists")
-                    .completed()
-                    .onSuccess {
-                        if (!isCurrentAccountRefresh(refreshGeneration)) return@onSuccess
-                        val lists =
-                            it.items.filterIsInstance<PlaylistItem>().filterNot { playlist ->
-                                playlist.id == "SE"
-                            }
-                        accountPlaylists.value = lists
-                    }.onFailure { error ->
-                        if (error is CancellationException) throw error
-                        Timber.w(error, "Failed to fetch account playlists")
-                    }
-            } catch (e: CancellationException) {
-                throw e
-            } catch (e: Exception) {
-                Timber.e(e, "Exception fetching account playlists")
-            }
-        }
-
-        private fun loadMoreYouTubeItems(continuation: String?) {
-            if (continuation == null || isLoadingMore.value) return
-            val hideExplicit = context.dataStore.get(HideExplicitKey, false)
-            val hideVideo = context.dataStore.get(HideVideoKey, false)
-
-            viewModelScope.launch(Dispatchers.IO) {
-                isLoadingMore.value = true
-                try {
-                    val blockedArtistIds = database.getBlockedArtistIds().toSet()
-                    val aiContentFilterPolicy = loadAiContentFilterPolicy()
-                    val nextSections = YouTube.home(continuation).getOrNull() ?: return@launch
-                    val mergedSections = homePage.value?.sections.orEmpty() + nextSections.sections
-                    val mergedPage =
-                        nextSections.copy(
-                            chips = homePage.value?.chips,
-                            sections =
-                                mergedSections.map { section ->
-                                    section.copy(
-                                        items =
-                                            filterAiContent(
-                                                section.items
-                                                    .filterExplicit(hideExplicit)
-                                                    .filterVideo(hideVideo)
-                                                    .filterBlockedArtists(blockedArtistIds),
-                                                aiContentFilterPolicy,
-                                            ),
-                                    )
-                                },
-                        )
-                    val (pageWithoutQuickPicks, _) = mergedPage.extractQuickPicks()
-                    homePage.value = pageWithoutQuickPicks
-                    updateAllYtItems()
-                } finally {
-                    isLoadingMore.value = false
-                }
-            }
-        }
-
-        private fun toggleChip(chip: HomePage.Chip?) {
-            chipLoadJob?.cancel()
-            if (chip == null || chip == selectedChip.value && previousHomePage.value != null) {
-                homePage.value = previousHomePage.value
-                remoteQuickPicks.value = previousRemoteQuickPicks.value
-                previousHomePage.value = null
-                previousRemoteQuickPicks.value = null
-                selectedChip.value = null
-                updateAllYtItems()
-                return
-            }
-
-            if (selectedChip.value == null) {
-                previousHomePage.value = homePage.value
-                previousRemoteQuickPicks.value = remoteQuickPicks.value
-            }
-
-            chipLoadJob =
-                viewModelScope.launch(Dispatchers.IO) {
-                    val hideExplicit = context.dataStore.get(HideExplicitKey, false)
-                    val hideVideo = context.dataStore.get(HideVideoKey, false)
-                    val blockedArtistIds = database.getBlockedArtistIds().toSet()
-                    val aiContentFilterPolicy = loadAiContentFilterPolicy()
-                    val nextSections = YouTube.home(params = chip?.endpoint?.params).getOrNull() ?: return@launch
-                    val filteredPage =
-                        nextSections.copy(
-                            chips = homePage.value?.chips,
-                            sections =
-                                nextSections.sections.map { section ->
-                                    section.copy(
-                                        items =
-                                            filterAiContent(
-                                                section.items
-                                                    .filterExplicit(hideExplicit)
-                                                    .filterVideo(hideVideo)
-                                                    .filterBlockedArtists(blockedArtistIds),
-                                                aiContentFilterPolicy,
-                                            ),
-                                    )
-                                },
-                        )
-                    val (pageWithoutQuickPicks, _) = filteredPage.extractQuickPicks()
-                    homePage.value = pageWithoutQuickPicks
-                    selectedChip.value = chip
-                    updateAllYtItems()
-                }
-        }
-
         private fun openRemoteItem(itemId: String) {
             when (val item = _allYtItems.value.firstOrNull { it.id == itemId }) {
                 is PodcastItem -> eventChannel.trySend(HomeEvent.OpenPodcast(item.browseId))
@@ -917,8 +652,6 @@ class HomeViewModel
         fun onAction(action: HomeAction) {
             when (action) {
                 HomeAction.Refresh -> refresh()
-                is HomeAction.SelectChip -> toggleChip(action.chip)
-                is HomeAction.LoadMore -> loadMoreYouTubeItems(action.continuation)
                 is HomeAction.OpenRemoteItem -> openRemoteItem(action.itemId)
             }
         }
@@ -990,10 +723,7 @@ class HomeViewModel
                             .toPlaybackAuthState()
                     YouTube.authState = authState
 
-                    supervisorScope {
-                        launch { refreshAccountIdentity(refreshGeneration) }
-                        launch { refreshAccountPlaylistsInternal(refreshGeneration) }
-                    }
+                    refreshAccountIdentity(refreshGeneration)
 
                     if (forceSyncOnSwitch && context.dataStore.get(YtmSyncKey, true) && authState.hasLoginCookie) {
                         syncUtils.clearRemoteLibraryState()
@@ -1060,11 +790,8 @@ class HomeViewModel
                                 load()
 
                                 val refreshGeneration = beginAccountRefresh()
-                                supervisorScope {
-                                    kotlinx.coroutines.delay(100)
-                                    launch { refreshAccountIdentity(refreshGeneration) }
-                                    launch { refreshAccountPlaylistsInternal(refreshGeneration) }
-                                }
+                                kotlinx.coroutines.delay(100)
+                                refreshAccountIdentity(refreshGeneration)
 
                                 if (loginTransition) {
                                     launch {
