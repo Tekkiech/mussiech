@@ -90,21 +90,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
-import androidx.compose.material3.PlainTooltip
-import androidx.compose.material3.RichTooltip
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.TooltipBox
-import androidx.compose.material3.TooltipDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.contentColorFor
-import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
@@ -188,7 +183,6 @@ import kotlinx.coroutines.withContext
 import tech.tekkiech.mussiech.aod.ACTION_AOD_MODE
 import tech.tekkiech.mussiech.constants.AppBarHeight
 import tech.tekkiech.mussiech.constants.AppFontPreference
-import tech.tekkiech.mussiech.constants.AppLanguageKey
 import tech.tekkiech.mussiech.constants.UseSystemLanguageKey
 import tech.tekkiech.mussiech.constants.CustomFontUriKey
 import tech.tekkiech.mussiech.constants.CustomThemeColorKey
@@ -217,7 +211,6 @@ import tech.tekkiech.mussiech.constants.PlayerDesignStyle
 import tech.tekkiech.mussiech.constants.PlayerDesignStyleKey
 import tech.tekkiech.mussiech.constants.PureBlackKey
 import tech.tekkiech.mussiech.constants.RemindAfterKey
-import tech.tekkiech.mussiech.constants.SYSTEM_DEFAULT
 import tech.tekkiech.mussiech.constants.SearchSource
 import tech.tekkiech.mussiech.constants.SearchSourceKey
 import tech.tekkiech.mussiech.constants.StopMusicOnTaskClearKey
@@ -308,7 +301,6 @@ import tech.tekkiech.mussiech.viewmodels.BackupRestoreViewModel
 import tech.tekkiech.mussiech.viewmodels.GatekeeperViewModel
 import tech.tekkiech.mussiech.viewmodels.HomeViewModel
 import tech.tekkiech.mussiech.viewmodels.NetworkBannerViewModel
-import tech.tekkiech.mussiech.viewmodels.NewsViewModel
 import tech.tekkiech.mussiech.viewmodels.OnlineSearchSort
 import java.util.Locale
 import javax.inject.Inject

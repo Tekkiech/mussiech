@@ -10,8 +10,6 @@
 package tech.tekkiech.mussiech.ui.screens.settings
 
 import android.content.Intent
-import android.os.Build
-import android.provider.Settings
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
