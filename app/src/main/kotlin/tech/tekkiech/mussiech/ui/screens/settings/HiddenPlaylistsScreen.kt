@@ -35,6 +35,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -64,7 +65,7 @@ fun HiddenPlaylistsScreen(navController: NavController) {
             descending = true,
         ).collectAsState(initial = emptyList())
 
-    val hiddenPlaylists = allPlaylists.filter { it.playlist.isHidden }
+    val hiddenPlaylists = remember(allPlaylists) { allPlaylists.filter { it.playlist.isHidden } }
 
     Scaffold(
         topBar = {

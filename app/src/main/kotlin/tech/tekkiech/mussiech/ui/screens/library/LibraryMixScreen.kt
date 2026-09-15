@@ -315,7 +315,7 @@ fun LibraryMixScreen(
                                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                                 modifier = Modifier.fillMaxWidth(),
                             ) {
-                                items(recentSongs) { song ->
+                                items(recentSongs, key = { it.song.id }) { song ->
                                     Column(
                                         modifier =
                                             Modifier
@@ -623,7 +623,7 @@ fun LibraryMixScreen(
                                 verticalAlignment = Alignment.CenterVertically,
                                 modifier = Modifier.fillMaxWidth(),
                             ) {
-                                items(artists.take(10)) { item ->
+                                items(artists.take(10), key = { it.artist.id }) { item ->
                                     val artist = item.artist
                                     Column(
                                         modifier =
