@@ -462,6 +462,12 @@ class MainActivity : ComponentActivity() {
             reportException(e)
         } finally {
             isMusicServiceBound = false
+            // unbindService() does not invoke onServiceDisconnected, so dispose/null the
+            // connection here too - otherwise it keeps this Activity alive via its player
+            // listener and metadata-extraction coroutine until the next onServiceConnected
+            // silently overwrites the field.
+            playerConnection?.dispose()
+            playerConnection = null
         }
     }
 
