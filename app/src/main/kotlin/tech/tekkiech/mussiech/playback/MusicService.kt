@@ -6784,10 +6784,27 @@ class MusicService :
                 ?.uri
                 ?.shouldBypassPlayerCache() == true
 
+    private fun @receiver:Player.State Int.playbackStateLabel(): String =
+        when (this) {
+            Player.STATE_IDLE -> "IDLE"
+            Player.STATE_BUFFERING -> "BUFFERING"
+            Player.STATE_READY -> "READY"
+            Player.STATE_ENDED -> "ENDED"
+            else -> "UNKNOWN($this)"
+        }
+
     override fun onPlaybackStateChanged(
         @Player.State playbackState: Int,
     ) {
         super.onPlaybackStateChanged(playbackState)
+
+        Timber.tag("PlaybackState").d(
+            "onPlaybackStateChanged: state=%s mediaId=%s position=%d isCrossfading=%b",
+            playbackState.playbackStateLabel(),
+            player.currentMediaItem?.mediaId,
+            player.currentPosition,
+            isCrossfading,
+        )
 
         updateHistoryTrackingPlaybackState()
         if (playbackState == Player.STATE_ENDED || playbackState == Player.STATE_IDLE) {
@@ -6864,6 +6881,13 @@ class MusicService :
 
     override fun onIsPlayingChanged(isPlaying: Boolean) {
         super.onIsPlayingChanged(isPlaying)
+        Timber.tag("PlaybackState").d(
+            "onIsPlayingChanged: isPlaying=%b mediaId=%s position=%d isCrossfading=%b",
+            isPlaying,
+            player.currentMediaItem?.mediaId,
+            player.currentPosition,
+            isCrossfading,
+        )
         secondaryCrossfadePlayer?.let { secondaryPlayer ->
             if (isCrossfading && !crossfadeHandoffInProgress) {
                 val isEndOfOutgoingItemPause =
@@ -7273,6 +7297,26 @@ class MusicService :
 
     override fun onPlayerError(error: PlaybackException) {
         super.onPlayerError(error)
+
+        Timber.tag("PlaybackState").w(
+            error,
+            "onPlayerError: errorCode=%s mediaId=%s position=%d isCrossfading=%b",
+            error.errorCodeName,
+            player.currentMediaItem?.mediaId,
+            player.currentPosition,
+            isCrossfading,
+        )
+
+        // A primary-player error mid-crossfade previously left isCrossfading stuck true with
+        // both players silently paused (see abortCrossfadeAndResumePrimary's other call sites,
+        // which already cover the secondary player's own error listener) - the crossfade loop
+        // never reaches finishCrossfade() to reset itself, so UI state (isPlaying, position)
+        // goes stale while genuinely producing no audio. Recover the same way a failed handoff
+        // already does, then let a fresh error on the now-resumed primary fall through below.
+        if (isCrossfading) {
+            abortCrossfadeAndResumePrimary("primary_player_error: ${error.errorCodeName}")
+            return
+        }
 
         val currentMediaId = player.currentMediaItem?.mediaId ?: return
         val isLocalMedia = currentMediaId.isLocalMediaId()
