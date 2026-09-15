@@ -50,16 +50,6 @@
     <string name="instant_playback">インスタント再生</string>
     <string name="on_device">デバイス上</string>
     <string name="recently_played">最近プレイした曲</string>
-    <string name="top_mixes">あなたのためのトップミックス</string>
-    <string name="library_top_mixes_loading">AI ミックスを準備しています…</string>
-    <string name="library_top_mixes_refresh">リフレッシュミックス</string>
-    <string name="library_top_mixes_configure_ai">AIを構成する</string>
-    <string name="library_top_mixes_ai_not_configured_title">AI を構成してミックスを構築する</string>
-    <string name="library_top_mixes_ai_not_configured_desc">ArchiveTune が個人のトップ ミックスを構築するには、AI の統合が必要です。</string>
-    <string name="library_top_mixes_no_recent_history_title">最近のリスニングミックスはまだありません</string>
-    <string name="library_top_mixes_no_recent_history">さらに曲を聴いてから、更新して最近の履歴から AI ミックスを構築します。</string>
-    <string name="library_top_mixes_no_valid_mixes">AI はあなたの最近の履歴から再生可能なミックスを返しませんでした。</string>
-    <string name="library_top_mixes_failed">トップミックスの構築に失敗しました</string>
     <string name="your_playlists">あなたのプレイリスト</string>
     <string name="see_all">全て見る</string>
     <string name="your_artists">あなたのアーティスト</string>

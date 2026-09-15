@@ -53,16 +53,6 @@
     <string name="instant_playback">Natychmiastowe odtwarzanie</string>
     <string name="on_device">Na urządzeniu</string>
     <string name="recently_played">Ostatnio grane</string>
-    <string name="top_mixes">Najlepsze miksy dla Ciebie</string>
-    <string name="library_top_mixes_loading">Przygotowywanie twoje miksy AI…</string>
-    <string name="library_top_mixes_refresh">Odśwież miksy</string>
-    <string name="library_top_mixes_configure_ai">Konfiguruj AI</string>
-    <string name="library_top_mixes_ai_not_configured_title">Skonfiguruj AI do tworzenia miksów</string>
-    <string name="library_top_mixes_ai_not_configured_desc">Integracja z AI jest wymagana, zanim ArchiveTune będzie mógł utworzyć osobiste miksy.</string>
-    <string name="library_top_mixes_no_recent_history_title">Brak ostatniego miksu</string>
-    <string name="library_top_mixes_no_recent_history">Posłuchaj więcej utworów, a następnie odśwież, aby utworzyć miksy AI na podstawie swojej ostatniej historii.</string>
-    <string name="library_top_mixes_no_valid_mixes">Sztuczna inteligencja nie zwróciła żadnych odtwarzalnych miksów z Twojej ostatniej historii.</string>
-    <string name="library_top_mixes_failed">Nie udało się utworzyć najlepszych miksów.</string>
     <string name="your_playlists">Twoje playlisty</string>
     <string name="see_all">Zobacz wszystkie</string>
     <string name="your_artists">Twoi artyści</string>

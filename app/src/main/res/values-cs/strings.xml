@@ -53,16 +53,6 @@
     <string name="instant_playback">Instantní přehrání</string>
     <string name="on_device">Na zařízení</string>
     <string name="recently_played">Naposledy přehráno</string>
-    <string name="top_mixes">Nejlepší mixy pro Vás</string>
-    <string name="library_top_mixes_loading">Připravujem vaše AI mixy…</string>
-    <string name="library_top_mixes_refresh">Obnovit mixy</string>
-    <string name="library_top_mixes_configure_ai">Nakonfigurovat AI</string>
-    <string name="library_top_mixes_ai_not_configured_title">Nakonfigurujte AI abyste mohli vytvářet mixy</string>
-    <string name="library_top_mixes_ai_not_configured_desc">AI integrace je vyžadována aby vám ArchiveTune mohl vytvořit osobní mixy.</string>
-    <string name="library_top_mixes_no_recent_history_title">Žádné nedávné mixy poslechů</string>
-    <string name="library_top_mixes_no_recent_history">Poslechněte více skladeb, následně obnovte stránku abyste si vytvořili AI mixy z vaší nedávné historie.</string>
-    <string name="library_top_mixes_no_valid_mixes">AI nevrátila jakékoliv hratelné mixy z vaší nedávné historie.</string>
-    <string name="library_top_mixes_failed">Nepodařilo se sestavit top mixy</string>
     <string name="your_playlists">Vaše Playlisty</string>
     <string name="see_all">Zobrazit vše</string>
     <string name="your_artists">Vaši Interpreti</string>

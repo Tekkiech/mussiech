@@ -454,7 +454,6 @@
     <string name="low_data_mode_description">Reduziert den mobilen Datenverbrauch, indem in Netzwerken mit Datenvolumenbegrenzung Streams in niedriger Qualität verwendet und die Wiedergabecache-Funktion sowie Canvas deaktiviert werden</string>
     <string name="permanent_shuffle">Permanenter Shuffle-Modus</string>
     <string name="permanent_shuffle_desc">Lässt Schuffle aktiviert, wenn du einen neuen Song startest</string>
-    <string name="library_top_mixes_configure_ai">KI konfigurieren</string>
     <string name="your_artists">Deine Künstler</string>
     <string name="all_songs">Alle Songs</string>
     <string name="newest_first">Neuste zuerst</string>
@@ -515,7 +514,6 @@
     <string name="downloaded_desc">Heruntergeladen</string>
     <string name="on_device">Auf dem Gerät</string>
     <string name="recently_played">Kürzlich gespielt</string>
-    <string name="library_top_mixes_loading">Bereite deine KI-Mixe vor…</string>
     <string name="widget_pause">Pause</string>
     <string name="widget_previous">Vorheriger</string>
     <string name="widget_tap_to_open">Tippe, um ArchiveTune zu öffnen</string>
@@ -711,11 +709,8 @@
     <string name="together_welcome_permissions_title">Berechtigungen und Sicherheit</string>
     <string name="saved_accounts">Gespeicherte Konten</string>
     <string name="save_current_account">Aktuelles Konto speichern</string>
-    <string name="library_top_mixes_no_recent_history">Höre dir mehr Songs an, dann aktualisiere, um KI-Mixe aus deinem bisherigen Verlauf zu erstellen.</string>
     <string name="no_artist_yet">Noch kein Künstler</string>
     <string name="cached">Im Cache</string>
-    <string name="library_top_mixes_refresh">Mixe aktualisieren</string>
-    <string name="library_top_mixes_ai_not_configured_title">Konfiguriere KI, um Mixe zu erstellen</string>
     <string name="your_playlists">Deine Playlists</string>
     <string name="see_all">Alle anzeigen</string>
     <string name="grid_view">Rasteransicht</string>
@@ -786,10 +781,6 @@
     <string name="lastfm_login_failed">Anmeldung fehlgeschlagen. Versuche es erneut.</string>
     <string name="duration_seconds_short">%1$ds</string>
     <string name="onboarding_welcome_title">Willkommen bei ArchiveTune</string>
-    <string name="top_mixes">Top-Mixe für dich</string>
-    <string name="library_top_mixes_ai_not_configured_desc">KI-Integration wird benötigt, bevor ArchiveTune persönliche Top-Mixe erstellen kann.</string>
-    <string name="library_top_mixes_no_valid_mixes">KI hat keine abspielbaren Mixe aus deinem bisherigen Verlauf zurückgegeben.</string>
-    <string name="library_top_mixes_failed">Erstellung der Top-Mixe fehlgeschlagen</string>
     <string name="subscribed_only">Nur Abonnierte</string>
     <string name="app_icon_available">Verfügbare Symbole</string>
     <string name="app_icon_community">Community-Symbol</string>
@@ -852,7 +843,6 @@
     <string name="onboarding_foss_variant">FOSS-Edition</string>
     <string name="onboarding_permission_device_audio_capture_title">Musikerkennung auf dem Gerät</string>
     <string name="channel_artifact">Canary</string>
-    <string name="library_top_mixes_no_recent_history_title">Noch kein aktueller Hör-Mix</string>
     <string name="widget_listening_time_empty">Noch keine Hörzeit</string>
     <string name="widget_no_recent_songs">Noch keine aktuellen Songs</string>
     <string name="widget_no_genres">Noch keine Genres</string>

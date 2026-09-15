@@ -33,7 +33,4 @@
     <string name="instant_playback">ක්ෂනික ප්ලේ කරන්න</string>
     <string name="on_device">මේකෙ තියන ඒවා</string>
     <string name="recently_played">කලින් අහපුවා</string>
-    <string name="top_mixes">ඔයා වෙනුවෙන් Top Mixes</string>
-    <string name="library_top_mixes_loading">ඔයාගෙ AI Mixes ලෑස්ති කරන ගමන්…</string>
-    <string name="library_top_mixes_configure_ai">AI එක හදාගන්න</string>
 </resources>

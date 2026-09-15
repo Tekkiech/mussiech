@@ -47,16 +47,6 @@
     <string name="instant_playback">Playback instantâneo</string>
     <string name="on_device">No dispositivo</string>
     <string name="recently_played">Tocadas Recentemente</string>
-    <string name="top_mixes">Top Mixes para Ti</string>
-    <string name="library_top_mixes_loading">A preparar os mixes de IA…</string>
-    <string name="library_top_mixes_refresh">Recarregar mixes</string>
-    <string name="library_top_mixes_configure_ai">Configuração de IA</string>
-    <string name="library_top_mixes_ai_not_configured_title">Configura a IA para crirar mixes</string>
-    <string name="library_top_mixes_ai_not_configured_desc">Integração de IA é necessária para o ArchiveTune criar mixes pessoais.</string>
-    <string name="library_top_mixes_no_recent_history_title">Ainda não há mix de músicas ouvidas recentemente</string>
-    <string name="library_top_mixes_no_recent_history">Ouve mais música, depois recarrega para criar mixes de IA a partir do histórico recente.</string>
-    <string name="library_top_mixes_no_valid_mixes">A IA não conseguiu criar nenhum mix a partir do histórico recente.</string>
-    <string name="library_top_mixes_failed">Erro ao criar os top mixes</string>
     <string name="your_playlists">As tuas Playlists</string>
     <string name="see_all">Ver tudo</string>
     <string name="your_artists">Os teus artistas</string>

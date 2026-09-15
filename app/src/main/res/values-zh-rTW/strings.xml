@@ -50,16 +50,6 @@
     <string name="instant_playback">即刻播放</string>
     <string name="on_device">本地歌曲</string>
     <string name="recently_played">最近播放</string>
-    <string name="top_mixes">為您精選的專屬合輯</string>
-    <string name="library_top_mixes_loading">正在準備您的 AI 專屬合輯…</string>
-    <string name="library_top_mixes_refresh">重新整理</string>
-    <string name="library_top_mixes_configure_ai">配置 AI 功能</string>
-    <string name="library_top_mixes_ai_not_configured_title">配置 AI 以產生合輯</string>
-    <string name="library_top_mixes_ai_not_configured_desc">在 ArchiveTune 能夠產生個人化精選混音之前，需要先進行 AI 整合。</string>
-    <string name="library_top_mixes_no_recent_history_title">暫無近期的收聽合輯</string>
-    <string name="library_top_mixes_no_recent_history">聆聽更多歌曲後刷新頁面，即可根據您的近期收聽記錄產生 AI 專屬合輯。</string>
-    <string name="library_top_mixes_no_valid_mixes">AI 未能從您的近期記錄中返回任何可播放的合輯。</string>
-    <string name="library_top_mixes_failed">生成專屬合輯失敗</string>
     <string name="your_playlists">你的播放清單</string>
     <string name="see_all">查看全部</string>
     <string name="your_artists">你關注的藝人</string>

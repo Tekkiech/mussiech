@@ -503,16 +503,6 @@
     <string name="instant_playback">تشغيل فوري</string>
     <string name="on_device">على الجهاز</string>
     <string name="recently_played">المشغلة مؤخرًا</string>
-    <string name="top_mixes">أفضل القوائم المختلطة لك</string>
-    <string name="library_top_mixes_loading">جاري إعداد قوائم الذكاء الاصطناعي…</string>
-    <string name="library_top_mixes_refresh">تحديث القوائم المختلطة</string>
-    <string name="library_top_mixes_configure_ai">تكوين الذكاء الاصطناعي</string>
-    <string name="library_top_mixes_ai_not_configured_title">قم بتكوين الذكاء الاصطناعي لإنشاء القوائم</string>
-    <string name="library_top_mixes_ai_not_configured_desc">يلزم ربط الذكاء الاصطناعي قبل أن يتمكن ArchiveTune من إنشاء القوائم المختلطة الشخصية.</string>
-    <string name="library_top_mixes_no_recent_history_title">لا توجد قائمة استماع حديثة بعد</string>
-    <string name="library_top_mixes_no_recent_history">استمع إلى المزيد من الأغاني، ثم حدّث لإنشاء قوائم الذكاء الاصطناعي من سجلك الحديث.</string>
-    <string name="library_top_mixes_no_valid_mixes">لم يرجع الذكاء الاصطناعي أي قوائم قابلة للتشغيل من سجلك الحديث.</string>
-    <string name="library_top_mixes_failed">فشل إنشاء القوائم المختلطة</string>
     <string name="your_playlists">قوائم تشغيلك</string>
     <string name="see_all">عرض الكل</string>
     <string name="your_artists">فنانوك</string>

@@ -136,16 +136,6 @@
     <string name="instant_playback">تشغيل فوري</string>
     <string name="on_device">على الجهاز</string>
     <string name="recently_played">اللي اتشغلت قريب</string>
-    <string name="top_mixes">أحسن ميكسات ليك</string>
-    <string name="library_top_mixes_loading">بنجهّز ميكسات الذكاء الاصطناعي بتاعتك…</string>
-    <string name="library_top_mixes_refresh">تحديث الميكسات</string>
-    <string name="library_top_mixes_configure_ai">ظبّط الذكاء الاصطناعي</string>
-    <string name="library_top_mixes_ai_not_configured_title">ظبّط الذكاء الاصطناعي عشان نجهزلك الميكسات</string>
-    <string name="library_top_mixes_ai_not_configured_desc">لازم نربط الذكاء الاصطناعي الأول عشان ArchiveTune يقدر يعمل ميكساتك المفضلة.</string>
-    <string name="library_top_mixes_no_recent_history_title">لسه مفيش ميكس استماع أخير</string>
-    <string name="library_top_mixes_no_recent_history">اسمع أغاني أكتر، وبعدين اعمل تحديث عشان نعمل ميكسات بالذكاء الاصطناعي من الأغاني اللي سمعتها من قريب.</string>
-    <string name="library_top_mixes_no_valid_mixes">الذكاء الاصطناعي مطلعش أي ميكسات ينفع تشتغل من الأغاني اللي سمعتها من قريب.</string>
-    <string name="library_top_mixes_failed">معرفناش نعمل ميكساتك المفضلة</string>
     <string name="your_playlists">البلاي ليستات بتاعتك</string>
     <string name="see_all">عرض الكل</string>
     <string name="your_artists">الفنانين بتوعك</string>

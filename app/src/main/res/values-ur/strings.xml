@@ -51,16 +51,6 @@
     <string name="instant_playback">فوری نشر</string>
     <string name="on_device">اختراع آلہ پر</string>
     <string name="recently_played">حالیہ سنا گیا</string>
-    <string name="top_mixes">آپکے لئے اعلیٰ امیزہ گیت</string>
-    <string name="library_top_mixes_loading">آپکے مصنوعی ذہانت امیزہ گیت تیار کیے جا رہے ہیں…</string>
-    <string name="library_top_mixes_refresh">آمیزہ گیت کو تازہ کریں</string>
-    <string name="library_top_mixes_configure_ai">مصنوعی ذہانت کی تشکیل کریں</string>
-    <string name="library_top_mixes_ai_not_configured_title">مصنوعی ذہانت کی آمیزہ گیت تعمیر کرنے کے لئے تشکیل کریں</string>
-    <string name="library_top_mixes_ai_not_configured_desc">‫زاتی امیزہ گیت کو تیار کرنے کے لئے ArchiveTune کو مصنوعی ذہانت کی تشکیل ضروری ہے۔</string>
-    <string name="library_top_mixes_no_recent_history_title">کوئ حالیہ آمیزہ گیت نہیں</string>
-    <string name="library_top_mixes_no_recent_history">مزید گیت سنیں پھر تازہ کر کے حالیہ سرگزشت سے مصنوعی ذہانت آمیزہ گیت تیار کریں۔</string>
-    <string name="library_top_mixes_no_valid_mixes">آپکی حالیہ سرگزشت سے مصنوعی ذہانت کوئ امیزہ گیت تیار نہیں کر سکا۔</string>
-    <string name="library_top_mixes_failed">اعلیٰ امیزہ گیت تیار کرنے میں ناکام</string>
     <string name="your_playlists">آپکے مجموعہ گیت</string>
     <string name="see_all">سب دیکھیں</string>
     <string name="your_artists">آپکے کلاکار</string>

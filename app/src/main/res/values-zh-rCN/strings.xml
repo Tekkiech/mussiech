@@ -580,16 +580,6 @@
     <string name="instant_playback">一键播放</string>
     <string name="on_device">本地存储</string>
     <string name="recently_played">最近播放</string>
-    <string name="top_mixes">为你推荐的精选合辑</string>
-    <string name="library_top_mixes_loading">正在为你生成 AI 精选合辑…</string>
-    <string name="library_top_mixes_refresh">刷新</string>
-    <string name="library_top_mixes_configure_ai">配置 AI</string>
-    <string name="library_top_mixes_ai_not_configured_title">配置 AI 以生成合辑</string>
-    <string name="library_top_mixes_ai_not_configured_desc">请先配置 AI，以便 ArchiveTune 为你准备专属合辑</string>
-    <string name="library_top_mixes_no_recent_history_title">暂无近期播放合辑</string>
-    <string name="library_top_mixes_no_recent_history">播放更多歌曲后刷新，即可基于听歌历史生成 AI 合辑</string>
-    <string name="library_top_mixes_no_valid_mixes">AI 未能根据你的近期播放历史生成可播放的合辑</string>
-    <string name="library_top_mixes_failed">合辑生成失败</string>
     <string name="your_playlists">你的歌单</string>
     <string name="see_all">全部</string>
     <string name="your_artists">你的艺人</string>

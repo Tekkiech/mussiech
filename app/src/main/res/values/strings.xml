@@ -57,16 +57,6 @@
     <string name="instant_playback">Instant playback</string>
     <string name="on_device">On device</string>
     <string name="recently_played">Recently Played</string>
-    <string name="top_mixes">Top Mixes for You</string>
-    <string name="library_top_mixes_loading">Preparing your AI mixes…</string>
-    <string name="library_top_mixes_refresh">Refresh mixes</string>
-    <string name="library_top_mixes_configure_ai">Configure AI</string>
-    <string name="library_top_mixes_ai_not_configured_title">Configure AI to build mixes</string>
-    <string name="library_top_mixes_ai_not_configured_desc">AI integration is required before Mussiech can build personal top mixes.</string>
-    <string name="library_top_mixes_no_recent_history_title">No recent listening mix yet</string>
-    <string name="library_top_mixes_no_recent_history">Listen to more songs, then refresh to build AI mixes from your recent history.</string>
-    <string name="library_top_mixes_no_valid_mixes">AI did not return any playable mixes from your recent history.</string>
-    <string name="library_top_mixes_failed">Failed to build top mixes</string>
     <string name="your_playlists">Your Playlists</string>
     <string name="see_all">See all</string>
     <string name="your_artists">Your Artists</string>

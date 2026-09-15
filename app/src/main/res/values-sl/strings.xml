@@ -53,14 +53,4 @@
     <string name="instant_playback">Takojšnje predvajanje</string>
     <string name="on_device">V napravi</string>
     <string name="recently_played">Nedavno predvajano</string>
-    <string name="top_mixes">Najboljše mešanice za vas</string>
-    <string name="library_top_mixes_loading">UI pripravlja vaš Mix…</string>
-    <string name="library_top_mixes_refresh">Posodobi mešanice</string>
-    <string name="library_top_mixes_configure_ai">Konfiguriraj UI</string>
-    <string name="library_top_mixes_ai_not_configured_title">Konfigurirajte UI, da zgradite mešanice</string>
-    <string name="library_top_mixes_ai_not_configured_desc">Preden ArchiveTune pripravi osebne izbore najboljših skladb, je potrebna integracija UI.</string>
-    <string name="library_top_mixes_no_recent_history_title">Še ni nedavnega mešanega nabora.</string>
-    <string name="library_top_mixes_no_recent_history">Poslušaj več pesmi, potem osvežite da zgradite mixe z UI.</string>
-    <string name="library_top_mixes_no_valid_mixes">UI ni ustvaril uporabnih mixov.</string>
-    <string name="library_top_mixes_failed">Napaka pri ustvarjanju najboljših Mixov</string>
 </resources>

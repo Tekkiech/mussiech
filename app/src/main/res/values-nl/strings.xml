@@ -51,16 +51,6 @@
     <string name="instant_playback">Direct afspelen</string>
     <string name="on_device">Op het apparaat</string>
     <string name="recently_played">Onlangs afgespeeld</string>
-    <string name="top_mixes">De beste mixen voor jou</string>
-    <string name="library_top_mixes_loading">Je AI-mixen voorbereiden…</string>
-    <string name="library_top_mixes_refresh">Mixen vernieuwen</string>
-    <string name="library_top_mixes_configure_ai">AI configureren</string>
-    <string name="library_top_mixes_ai_not_configured_title">Stel de AI in om mixen te maken</string>
-    <string name="library_top_mixes_ai_not_configured_desc">Er is AI-integratie nodig voordat ArchiveTune persoonlijke topmixen kan samenstellen.</string>
-    <string name="library_top_mixes_no_recent_history_title">Er is nog geen recente luistermix</string>
-    <string name="library_top_mixes_no_recent_history">Luister naar meer nummers en vernieuw vervolgens de pagina om AI-mixen te maken op basis van je recente luistergeschiedenis.</string>
-    <string name="library_top_mixes_no_valid_mixes">De AI heeft geen afspeelbare mixen uit je recente geschiedenis gevonden.</string>
-    <string name="library_top_mixes_failed">Kan de populairste mixen niet samenstellen</string>
     <string name="your_playlists">Jouw Afspeellijsten</string>
     <string name="see_all">Alles bekijken</string>
     <string name="your_artists">Jouw Artiesten</string>
