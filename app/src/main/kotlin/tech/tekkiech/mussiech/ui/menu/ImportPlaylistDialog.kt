@@ -43,6 +43,7 @@ import tech.tekkiech.mussiech.db.entities.PlaylistEntity
 import tech.tekkiech.mussiech.db.entities.PlaylistSongMap
 import tech.tekkiech.mussiech.ui.component.DefaultDialog
 import tech.tekkiech.mussiech.ui.component.TextFieldDialog
+import tech.tekkiech.mussiech.utils.reportException
 import java.time.LocalDateTime
 
 @Composable
@@ -160,7 +161,7 @@ fun ImportPlaylistDialog(
                             onDismiss()
                         }
                     } catch (e: Exception) {
-                        e.printStackTrace()
+                        reportException(e)
                         showMessage(context.getString(R.string.import_failed) + ": ${e.message ?: "Unknown error"}")
                         withContext(Dispatchers.Main) {
                             resetState()
@@ -261,7 +262,7 @@ fun ImportPlaylistDialog(
                                     onDismiss()
                                 }
                             } catch (e: Exception) {
-                                e.printStackTrace()
+                                reportException(e)
                                 showMessage(context.getString(R.string.import_failed) + ": ${e.message ?: "Unknown error"}")
                                 withContext(Dispatchers.Main) {
                                     resetState()
@@ -310,7 +311,7 @@ fun ImportPlaylistDialog(
                                     onDismiss()
                                 }
                             } catch (e: Exception) {
-                                e.printStackTrace()
+                                reportException(e)
                                 showMessage(context.getString(R.string.import_failed) + ": ${e.message ?: "Unknown error"}")
                                 withContext(Dispatchers.Main) {
                                     resetState()

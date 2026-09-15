@@ -104,6 +104,7 @@ import tech.tekkiech.mussiech.utils.joinByBullet
 import tech.tekkiech.mussiech.utils.makeTimeString
 import tech.tekkiech.mussiech.utils.parseSpeedDialPins
 import tech.tekkiech.mussiech.utils.rememberPreference
+import tech.tekkiech.mussiech.utils.reportException
 import tech.tekkiech.mussiech.utils.serializeSpeedDialPins
 import tech.tekkiech.mussiech.utils.toggleSpeedDialPin
 
@@ -858,7 +859,7 @@ fun YouTubePlaylistMenu(
                                                 }
                                             }
                                         } catch (e: Exception) {
-                                            e.printStackTrace()
+                                            reportException(e)
                                             withContext(Dispatchers.Main) {
                                                 val errorMsg =
                                                     context.getString(R.string.import_failed) + ": ${e.message ?: "Unknown error"}"

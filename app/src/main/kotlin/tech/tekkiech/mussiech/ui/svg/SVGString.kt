@@ -7,10 +7,10 @@
 
 package tech.tekkiech.mussiech.ui.svg
 
-import android.util.Log
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import tech.tekkiech.mussiech.ui.theme.palette.TonalPalettes
+import tech.tekkiech.mussiech.utils.reportException
 
 object SVGString
 
@@ -20,7 +20,6 @@ fun String.parseDynamicColor(
 ): String =
     replace("fill=\"(.+?)\"".toRegex()) {
         val value = it.groupValues[1]
-        Log.i("RLog", "parseDynamicColor: $value")
         if (value.startsWith("#")) return@replace it.value
         try {
             val (scheme, tone) = value.split("(?<=\\d)(?=\\D)|(?=\\d)(?<=\\D)".toRegex())
@@ -36,8 +35,7 @@ fun String.parseDynamicColor(
                 }?.toArgb() ?: 0xFFFFFF
             "fill=\"${String.format("#%06X", 0xFFFFFF and argb)}\""
         } catch (e: Exception) {
-            e.printStackTrace()
-            Log.e("RLog", "parseDynamicColor: ${e.message}")
+            reportException(e)
             it.value
         }
     }

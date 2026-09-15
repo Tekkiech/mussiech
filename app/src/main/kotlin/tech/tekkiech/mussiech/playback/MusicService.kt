@@ -1210,7 +1210,7 @@ class MusicService :
         }
         wakeLock =
             (getSystemService(Context.POWER_SERVICE) as PowerManager)
-                .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "ArchiveTune:Playback")
+                .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Mussiech:Playback")
                 .also { it.setReferenceCounted(false) }
         setupAudioFocusRequest()
         audioManager.registerAudioDeviceCallback(audioDeviceCallback, android.os.Handler(mainLooper))
@@ -1231,7 +1231,7 @@ class MusicService :
                     val pm = getSystemService(Context.POWER_SERVICE) as? PowerManager
                     val aodLaunchWl = pm?.newWakeLock(
                         PowerManager.PARTIAL_WAKE_LOCK,
-                        "ArchiveTune:AodAutoStart",
+                        "Mussiech:AodAutoStart",
                     )
                     aodLaunchWl?.acquire(3000L)
 
