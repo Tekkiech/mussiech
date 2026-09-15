@@ -12,6 +12,7 @@ import dev.zt64.subsonic.api.model.ArtistIndex
 import dev.zt64.subsonic.api.model.Lyrics
 import dev.zt64.subsonic.api.model.Playlist
 import dev.zt64.subsonic.api.model.SearchResult
+import dev.zt64.subsonic.api.model.Song
 import dev.zt64.subsonic.client.SubsonicClient
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
@@ -80,6 +81,8 @@ class NavidromeRepository
         suspend fun getPlaylists(): Result<List<Playlist>> = call { it.getPlaylists() }
 
         suspend fun getPlaylist(id: String): Result<Playlist> = call { it.getPlaylist(id) }
+
+        suspend fun getSong(id: String): Result<Song> = call { it.getSong(id) }
 
         suspend fun star(id: String): Result<Unit> = call { it.star(id) }
 
