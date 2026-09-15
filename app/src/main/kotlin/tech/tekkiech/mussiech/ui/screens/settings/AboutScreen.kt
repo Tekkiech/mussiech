@@ -715,7 +715,7 @@ private fun AboutSuccessContent(
         item(key = "team", contentType = "about_team_section") {
             AboutContentContainer {
                 TeamMemberSection(
-                    title = stringResource(R.string.about_archive_tune_team),
+                    title = stringResource(R.string.about_archive_tune_design_credits),
                     members = model.collaborators,
                     onOpenUri = onOpenUri,
                     modifier = Modifier.fillMaxWidth(),
